@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNO本八幡 予測ダッシュボード</title>
+<title>UNO本八幡 V8予測ダッシュボード</title>
 <style>
 
-* {
-  box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
   margin: 0;
   background:
@@ -19,462 +16,111 @@ body {
   color: #eaf2ff;
   font-family: "Segoe UI", "Meiryo", sans-serif;
 }
-
-.container {
-  padding: 28px 34px;
-  max-width: 1500px;
-  margin: 0 auto;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  margin-bottom: 18px;
-}
-
-h1 {
-  margin: 0 0 10px;
-  font-size: 34px;
-  letter-spacing: 1px;
-  color: #ffffff;
-  text-shadow: 0 0 14px rgba(70,160,255,.45);
-}
-
-h1 .uno {
-  color: #ffd21f;
-  text-shadow: 0 0 16px rgba(255,210,31,.55);
-}
-
-.sub {
-  color: #9db8dc;
-  font-size: 15px;
-}
-
-.legend {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.legend-item {
-  border-radius: 10px;
-  padding: 9px 12px;
-  font-size: 13px;
-  font-weight: 700;
-  border: 1px solid rgba(255,255,255,.14);
-}
-
-.cards {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-}
-
-.card {
-  background: linear-gradient(135deg, rgba(16,26,45,.95), rgba(8,14,26,.95));
-  border: 1px solid #1f3b64;
-  border-radius: 14px;
-  padding: 14px 20px;
-  min-width: 160px;
-  box-shadow: 0 0 22px rgba(0, 140, 255, .15);
-}
-
-.card.gold {
-  border-color: rgba(255,215,0,.45);
-  box-shadow: 0 0 22px rgba(255,215,0,.16);
-}
-
-.card.red {
-  border-color: rgba(255,60,60,.45);
-  box-shadow: 0 0 22px rgba(255,0,0,.14);
-}
-
-.card-title {
-  color: #9db8dc;
-  font-size: 13px;
-  margin-bottom: 8px;
-}
-
-.card-value {
-  font-size: 28px;
-  font-weight: 900;
-}
-
+.container { padding: 28px 34px; max-width: 1500px; margin: 0 auto; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 18px; }
+h1 { margin: 0 0 10px; font-size: 34px; letter-spacing: 1px; color: #ffffff; text-shadow: 0 0 14px rgba(70,160,255,.45); }
+h1 .uno { color: #ffd21f; text-shadow: 0 0 16px rgba(255,210,31,.55); }
+h1 .v8 { color: #6df6ff; text-shadow: 0 0 16px rgba(80,220,255,.55); }
+.sub { color: #9db8dc; font-size: 15px; line-height: 1.5; }
+.legend { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.legend-item { border-radius: 10px; padding: 9px 12px; font-size: 13px; font-weight: 700; border: 1px solid rgba(255,255,255,.14); }
+.cards { display: flex; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+.card { background: linear-gradient(135deg, rgba(16,26,45,.95), rgba(8,14,26,.95)); border: 1px solid #1f3b64; border-radius: 14px; padding: 14px 20px; min-width: 160px; box-shadow: 0 0 22px rgba(0, 140, 255, .15); }
+.card.gold { border-color: rgba(255,215,0,.45); box-shadow: 0 0 22px rgba(255,215,0,.16); }
+.card.red { border-color: rgba(255,60,60,.45); box-shadow: 0 0 22px rgba(255,0,0,.14); }
+.card-title { color: #9db8dc; font-size: 13px; margin-bottom: 8px; }
+.card-value { font-size: 28px; font-weight: 900; }
 .gold-text { color: #ffd21f; }
 .red-text { color: #ff3045; }
-
-.controls {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 0 0 18px;
-  background: rgba(8, 15, 28, .72);
-  border: 1px solid #1b3558;
-  border-radius: 14px;
-  padding: 14px;
-}
-
-.search-box {
-  flex: 1;
-  min-width: 220px;
-}
-
-.search-box input {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #2a4a77;
-  background: #071020;
-  color: #fff;
-  font-size: 15px;
-}
-
-.filter-buttons,
-.machine-hide-buttons {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.filter-buttons button,
-.machine-hide-buttons button {
-  border: 1px solid #2a4a77;
-  background: #0d1c33;
-  color: #d8e6ff;
-  border-radius: 999px;
-  padding: 10px 13px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.filter-buttons button.active {
-  background: #1b66ff;
-  color: white;
-  box-shadow: 0 0 12px rgba(0,120,255,.45);
-}
-
-.machine-filter-title {
-  width: 100%;
-  color: #9db8dc;
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-.machine-hide-buttons {
-  width: 100%;
-}
-
-.machine-hide-buttons button.hidden-on {
-  background: #7a1f2a;
-  border-color: #ff4055;
-  color: white;
-  box-shadow: 0 0 12px rgba(255,0,0,.35);
-}
-
-.table-wrap {
-  border: 1px solid #1b3558;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 0 28px rgba(0,130,255,.12);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: rgba(8, 15, 28, .96);
-}
-
-th {
-  background: linear-gradient(180deg, #132b4a, #0e2139);
-  color: #c7ddff;
-  padding: 13px 12px;
-  text-align: left;
-  font-size: 13px;
-  white-space: nowrap;
-}
-
-td {
-  padding: 13px 12px;
-  border-bottom: 1px solid #172944;
-  font-size: 14px;
-  vertical-align: middle;
-}
-
-tr:hover {
-  background: rgba(25,48,82,.55);
-}
-
+.controls { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 18px; background: rgba(8, 15, 28, .72); border: 1px solid #1b3558; border-radius: 14px; padding: 14px; }
+.search-box { flex: 1; min-width: 220px; }
+.search-box input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #2a4a77; background: #071020; color: #fff; font-size: 15px; }
+.filter-buttons, .machine-hide-buttons, .type-filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-buttons button, .machine-hide-buttons button, .type-filter-buttons button { border: 1px solid #2a4a77; background: #0d1c33; color: #d8e6ff; border-radius: 999px; padding: 10px 13px; cursor: pointer; font-weight: 700; }
+.filter-buttons button.active, .type-filter-buttons button.active { background: #1b66ff; color: white; box-shadow: 0 0 12px rgba(0,120,255,.45); }
+.machine-filter-title { width: 100%; color: #9db8dc; font-size: 12px; margin-top: 4px; }
+.machine-hide-buttons { width: 100%; }
+.machine-hide-buttons button.hidden-on { background: #7a1f2a; border-color: #ff4055; color: white; box-shadow: 0 0 12px rgba(255,0,0,.35); }
+.table-wrap { border: 1px solid #1b3558; border-radius: 14px; overflow: hidden; box-shadow: 0 0 28px rgba(0,130,255,.12); }
+table { width: 100%; border-collapse: collapse; background: rgba(8, 15, 28, .96); }
+th { background: linear-gradient(180deg, #132b4a, #0e2139); color: #c7ddff; padding: 13px 12px; text-align: left; font-size: 13px; white-space: nowrap; }
+td { padding: 13px 12px; border-bottom: 1px solid #172944; font-size: 14px; vertical-align: middle; }
+tr:hover { background: rgba(25,48,82,.55); }
 .center { text-align: center; }
-
-.rank-cell {
-  width: 70px;
-  font-size: 20px;
-  font-weight: 900;
-}
-
-.machine-no {
-  color: #63d4ff;
-  font-size: 24px;
-  font-weight: 900;
-  text-shadow: none;
-}
-
-.machine-name {
-  font-weight: 700;
-  min-width: 220px;
-  color: #f4f8ff;
-}
-
-.score-cell {
-  color: #ffd21f;
-  font-size: 23px;
-  font-weight: 900;
-  width: 85px;
-  text-shadow: 0 0 10px rgba(255,210,31,.35);
-}
-
-.reason {
-  color: #d8e6ff;
-  font-size: 13px;
-  line-height: 1.45;
-  max-width: 640px;
-}
-
-.num {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.minus { color: #ff3045; }
-.plus { color: #57ff75; }
+.rank-cell { width: 70px; font-size: 20px; font-weight: 900; }
+.machine-no { color: #63d4ff; font-size: 24px; font-weight: 900; text-shadow: none; }
+.machine-name { font-weight: 700; min-width: 220px; color: #f4f8ff; }
+.score-cell { color: #ffd21f; font-size: 23px; font-weight: 900; width: 85px; text-shadow: 0 0 10px rgba(255,210,31,.35); }
+.reason { color: #d8e6ff; font-size: 13px; line-height: 1.45; max-width: 640px; }
+.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .rate { color: #ffffff; }
-
-.badge {
-  display: inline-block;
-  min-width: 54px;
-  text-align: center;
-  padding: 7px 13px;
-  border-radius: 999px;
-  font-weight: 900;
-  letter-spacing: .5px;
-}
-
-.rank-S {
-  background: linear-gradient(135deg,#ffe45c,#f5b800);
-  color:#111;
-  box-shadow:0 0 14px rgba(255,215,0,.65);
-}
-
-.rank-A {
-  background: linear-gradient(135deg,#ff4055,#d90018);
-  color:white;
-  box-shadow:0 0 14px rgba(255,0,0,.55);
-}
-
-.rank-B {
-  background: linear-gradient(135deg,#2d8cff,#0057ff);
-  color:white;
-  box-shadow:0 0 14px rgba(0,120,255,.55);
-}
-
-.rank-C {
-  background: linear-gradient(135deg,#00d084,#009966);
-  color:white;
-  box-shadow:0 0 14px rgba(0,208,132,.55);
-}
-
-.rank-D {
-  background: linear-gradient(135deg,#777,#444);
-  color:white;
-}
-
-.mobile-list {
-  display: none;
-}
-
-.m-card {
-  background: rgba(8, 15, 28, .96);
-  border: 1px solid #1b3558;
-  border-radius: 16px;
-  padding: 14px;
-  margin-bottom: 12px;
-  box-shadow: 0 0 18px rgba(0,130,255,.10);
-}
-
-.m-top {
-  display: grid;
-  grid-template-columns: 44px 1fr auto auto;
-  gap: 8px;
-  align-items: center;
-}
-
-.m-rank {
-  font-size: 21px;
-  font-weight: 900;
-  text-align: center;
-}
-
-.m-no {
-  color: #63d4ff;
-  font-size: 31px;
-  font-weight: 900;
-  line-height: 1;
-}
-
-.m-score {
-  color: #ffd21f;
-  font-size: 15px;
-  font-weight: 900;
-  white-space: nowrap;
-}
-
-.m-name {
-  margin-top: 8px;
-  font-size: 17px;
-  font-weight: 900;
-  color: #fff;
-}
-
-.m-metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.m-metrics div {
-  background: #071020;
-  border: 1px solid #172944;
-  border-radius: 10px;
-  padding: 8px;
-}
-
-.m-metrics span {
-  display: block;
-  color: #8fa7c7;
-  font-size: 11px;
-}
-
-.m-metrics b {
-  display: block;
-  margin-top: 4px;
-  font-size: 14px;
-}
-
-.m-reason {
-  margin-top: 10px;
-  color: #d8e6ff;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.footer {
-  margin-top: 18px;
-  color: #8fa7c7;
-  font-size: 13px;
-}
-
+.badge { display: inline-block; min-width: 54px; text-align: center; padding: 7px 13px; border-radius: 999px; font-weight: 900; letter-spacing: .5px; }
+.rank-S { background: linear-gradient(135deg,#ffe45c,#f5b800); color:#111; box-shadow:0 0 14px rgba(255,215,0,.65); }
+.rank-A { background: linear-gradient(135deg,#ff4055,#d90018); color:white; box-shadow:0 0 14px rgba(255,0,0,.55); }
+.rank-B { background: linear-gradient(135deg,#2d8cff,#0057ff); color:white; box-shadow:0 0 14px rgba(0,120,255,.55); }
+.rank-C { background: linear-gradient(135deg,#00d084,#009966); color:white; box-shadow:0 0 14px rgba(0,208,132,.55); }
+.rank-D { background: linear-gradient(135deg,#777,#444); color:white; }
+.type-badge { display:inline-block; min-width:70px; text-align:center; padding:6px 10px; border-radius:999px; font-size:12px; font-weight:900; }
+.type-rough { background:rgba(255,180,40,.16); color:#ffd66d; border:1px solid rgba(255,180,40,.45); }
+.type-collect { background:rgba(255,60,60,.15); color:#ff8090; border:1px solid rgba(255,60,60,.45); }
+.type-bonus { background:rgba(80,255,140,.15); color:#80ffab; border:1px solid rgba(80,255,140,.45); }
+.type-range { background:rgba(80,170,255,.15); color:#8fc9ff; border:1px solid rgba(80,170,255,.45); }
+.type-default { background:rgba(200,200,200,.12); color:#ddd; border:1px solid rgba(255,255,255,.25); }
+.mobile-list { display: none; }
+.m-card { background: rgba(8, 15, 28, .96); border: 1px solid #1b3558; border-radius: 16px; padding: 14px; margin-bottom: 12px; box-shadow: 0 0 18px rgba(0,130,255,.10); }
+.m-top { display: grid; grid-template-columns: 44px 1fr auto auto; gap: 8px; align-items: center; }
+.m-rank { font-size: 21px; font-weight: 900; text-align: center; }
+.m-no { color: #63d4ff; font-size: 31px; font-weight: 900; line-height: 1; }
+.m-score { color: #ffd21f; font-size: 15px; font-weight: 900; white-space: nowrap; }
+.m-name { margin-top: 8px; font-size: 17px; font-weight: 900; color: #fff; }
+.m-subline { margin-top: 8px; color: #9db8dc; font-size: 12px; }
+.m-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.m-metrics div { background: #071020; border: 1px solid #172944; border-radius: 10px; padding: 8px; }
+.m-metrics span { display: block; color: #8fa7c7; font-size: 11px; }
+.m-metrics b { display: block; margin-top: 4px; font-size: 14px; }
+.m-reason { margin-top: 10px; color: #d8e6ff; font-size: 12px; line-height: 1.5; }
+.footer { margin-top: 18px; color: #8fa7c7; font-size: 13px; }
 @media (max-width: 760px) {
-  .container {
-    padding: 14px;
-  }
-
-  .header {
-    display: block;
-    margin-bottom: 14px;
-  }
-
-  h1 {
-    font-size: 25px;
-    line-height: 1.25;
-  }
-
-  .sub {
-    font-size: 12px;
-    line-height: 1.5;
-  }
-
-  .legend {
-    justify-content: flex-start;
-    margin-top: 12px;
-    gap: 6px;
-  }
-
-  .legend-item {
-    font-size: 11px;
-    padding: 7px 8px;
-  }
-
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .card {
-    min-width: 0;
-    padding: 12px;
-  }
-
-  .card-title {
-    font-size: 11px;
-  }
-
-  .card-value {
-    font-size: 23px;
-  }
-
-  .controls {
-    padding: 10px;
-  }
-
-  .filter-buttons button,
-  .machine-hide-buttons button {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-
-  .table-wrap {
-    display: none;
-  }
-
-  .mobile-list {
-    display: block;
-  }
+  .container { padding: 14px; }
+  .header { display: block; margin-bottom: 14px; }
+  h1 { font-size: 25px; line-height: 1.25; }
+  .sub { font-size: 12px; line-height: 1.5; }
+  .legend { justify-content: flex-start; margin-top: 12px; gap: 6px; }
+  .legend-item { font-size: 11px; padding: 7px 8px; }
+  .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .card { min-width: 0; padding: 12px; }
+  .card-title { font-size: 11px; }
+  .card-value { font-size: 23px; }
+  .controls { padding: 10px; }
+  .filter-buttons button, .machine-hide-buttons button, .type-filter-buttons button { padding: 8px 10px; font-size: 12px; }
+  .table-wrap { display: none; }
+  .mobile-list { display: block; }
 }
 
 </style>
 </head>
 <body>
 <div class="container">
-
   <div class="header">
     <div>
-      <h1><span class="uno">UNO本八幡</span> 予測ダッシュボード</h1>
-      <div class="sub">予測日: 2026-06-22 / 基準日: 2026-06-21 / 元CSV: osurepo_predict_20260622_top50_v7_trust.csv</div>
+      <h1><span class="uno">UNO本八幡</span> <span class="v8">V8</span> 予測ダッシュボード</h1>
+      <div class="sub">予測日: 2026-06-21 / 基準: 2026-06-20 / 元CSV: predict_good_machines_v8_top30.csv<br>V8: 台番×1.5 / 島×0.5 / 位置タイプ×0.2 / 島内位置×1.0 / 機種×0.5 / 履歴×0.1</div>
     </div>
-
     <div class="legend">
-      <div class="legend-item rank-S">S: 17+</div>
-      <div class="legend-item rank-A">A: 14〜16</div>
-      <div class="legend-item rank-B">B: 11〜13</div>
-      <div class="legend-item rank-C">C: 9〜10</div>
-      <div class="legend-item rank-D">D: 8以下</div>
+      <div class="legend-item rank-S">S: TOP5</div>
+      <div class="legend-item rank-A">A: 6〜10位</div>
+      <div class="legend-item rank-B">B: 11〜20位</div>
+      <div class="legend-item rank-C">C: 21〜30位</div>
     </div>
   </div>
 
   <div class="cards">
-    <div class="card"><div class="card-title">表示台数</div><div class="card-value">50台</div></div>
-    <div class="card gold"><div class="card-title">最高スコア</div><div class="card-value gold-text">14</div></div>
-    <div class="card gold"><div class="card-title">Sランク</div><div class="card-value gold-text">0台</div></div>
-    <div class="card red"><div class="card-title">Aランク</div><div class="card-value red-text">6台</div></div>
-    <div class="card"><div class="card-title">Bランク</div><div class="card-value">18台</div></div>
-    <div class="card"><div class="card-title">Cランク</div><div class="card-value">26台</div></div>
+    <div class="card"><div class="card-title">表示台数</div><div class="card-value">30台</div></div>
+    <div class="card gold"><div class="card-title">最高スコア</div><div class="card-value gold-text">203.09</div></div>
+    <div class="card gold"><div class="card-title">Sランク</div><div class="card-value gold-text">5台</div></div>
+    <div class="card red"><div class="card-title">Aランク</div><div class="card-value red-text">5台</div></div>
+    <div class="card"><div class="card-title">Bランク</div><div class="card-value">10台</div></div>
+    <div class="card"><div class="card-title">Cランク</div><div class="card-value">10台</div></div>
   </div>
 
   <div class="controls">
@@ -487,7 +133,13 @@ tr:hover {
       <button data-rank-filter="A">A</button>
       <button data-rank-filter="B">B</button>
       <button data-rank-filter="C">C</button>
-      <button data-rank-filter="D">D</button>
+    </div>
+    <div class="type-filter-buttons">
+      <button class="active" data-type-filter="ALL">全タイプ</button>
+      <button data-type-filter="荒波型">荒波型</button>
+      <button data-type-filter="回収型">回収型</button>
+      <button data-type-filter="ボーナス型">ボーナス型</button>
+      <button data-type-filter="レンジ型">レンジ型</button>
     </div>
 
     <div class="machine-filter-title">機種を非表示にする</div>
@@ -498,6 +150,7 @@ tr:hover {
       <button data-hide-machine="炎炎">炎炎非表示</button>
       <button data-hide-machine="攻殻">攻殻非表示</button>
       <button data-hide-machine="乙女">乙女非表示</button>
+      <button data-hide-machine="vvv">VVV非表示</button>
       <button data-hide-machine="ALL_CLEAR">非表示解除</button>
     </div>
   </div>
@@ -509,614 +162,405 @@ tr:hover {
           <th>順位</th>
           <th>台番</th>
           <th>機種名</th>
-          <th>スコア</th>
+          <th>V8スコア</th>
           <th>ランク</th>
+          <th>タイプ</th>
           <th>理由</th>
-          <th>前日G</th>
-          <th>前日最沈み</th>
-          <th>台番良台率%</th>
+          <th>台番勝率</th>
+          <th>機種勝率</th>
+          <th>履歴</th>
         </tr>
       </thead>
       <tbody id="tableBody">
         
-    <tr data-search="1034 甲鉄城のカバネリ海門決戦 a 台番良台率30%以上+6 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="A" data-machine="甲鉄城のカバネリ海門決戦">
+    <tr data-search="1058 東京喰種 s 台番勝率56.1% / 島勝率高め44.6% / 機種勝率高め43.2% / 今日成立履歴+24.44 / prev1_hekomi:80.00%/10件/lift+24.44 / lose_streak_1:52.63%/19件/lift+0.00 / 荒波型 荒波型 g2 17 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="S" data-machine="東京喰種" data-type="荒波型">
       <td class="center rank-cell">🥇</td>
-      <td class="machine-no">1034</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">14</td>
-      <td><span class="badge rank-A">A</span></td>
-      <td class="reason">台番良台率30%以上+6 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 3日前良台+1</td>
-      <td class="num">8,230</td>
-      <td class="num minus">-1,031</td>
-      <td class="num rate">30.77</td>
+      <td class="machine-no">1058</td>
+      <td class="machine-name">東京喰種</td>
+      <td class="score-cell">203.09</td>
+      <td><span class="badge rank-S">S</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率56.1% / 島勝率高め44.6% / 機種勝率高め43.2% / 今日成立履歴+24.44 / prev1_hekomi:80.00%/10件/lift+24.44 / lose_streak_1:52.63%/19件/lift+0.00 / 荒波型</td>
+      <td class="num rate">56.10%</td>
+      <td class="num rate">43.24%</td>
+      <td class="num">521.40</td>
     </tr>
     
-    <tr data-search="1048 東京喰種 a 台番良台率30%以上+6 / 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="A" data-machine="東京喰種">
+    <tr data-search="807 birdie wing s 台番勝率66.7% / 島勝率50.0% / 機種勝率48.4% / 荒波型 荒波型 bw1 3 " data-rank="S" data-machine="BIRDIE WING" data-type="荒波型">
       <td class="center rank-cell">🥈</td>
-      <td class="machine-no">1048</td>
-      <td class="machine-name">東京喰種</td>
-      <td class="score-cell">14</td>
-      <td><span class="badge rank-A">A</span></td>
-      <td class="reason">台番良台率30%以上+6 / 機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">5,702</td>
-      <td class="num minus">-4,634</td>
-      <td class="num rate">30.26</td>
+      <td class="machine-no">807</td>
+      <td class="machine-name">BIRDIE WING</td>
+      <td class="score-cell">199.21</td>
+      <td><span class="badge rank-S">S</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率66.7% / 島勝率50.0% / 機種勝率48.4% / 荒波型</td>
+      <td class="num rate">66.67%</td>
+      <td class="num rate">48.39%</td>
+      <td class="num">426.19</td>
     </tr>
     
-    <tr data-search="836 スーパーリオエース2 a 台番良台率25%以上+3 / 機種良台率25%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="A" data-machine="スーパーリオエース2">
+    <tr data-search="1064 東京喰種 s 島勝率高め44.6% / 機種勝率高め43.2% / 今日成立履歴+47.24 / prev1_hekomi:40.74%/27件/lift+5.58 / prev3_hekomi:36.00%/25件/lift+0.84 / lose_streak_1:37.21%/43件/lift+2.05 / lose_streak_2:45.45%/22件/lift+10.29 / lose_streak_3:63.64%/11件/lift+28.48 / 回収型 回収型 g2 23 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="S" data-machine="東京喰種" data-type="回収型">
       <td class="center rank-cell">🥉</td>
-      <td class="machine-no">836</td>
-      <td class="machine-name">スーパーリオエース2</td>
-      <td class="score-cell">14</td>
-      <td><span class="badge rank-A">A</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">7,615</td>
-      <td class="num minus">-5,138</td>
-      <td class="num rate">27.27</td>
+      <td class="machine-no">1064</td>
+      <td class="machine-name">東京喰種</td>
+      <td class="score-cell">197.28</td>
+      <td><span class="badge rank-S">S</span></td>
+      <td><span class="type-badge type-collect">回収型</span></td>
+      <td class="reason">島勝率高め44.6% / 機種勝率高め43.2% / 今日成立履歴+47.24 / prev1_hekomi:40.74%/27件/lift+5.58 / prev3_hekomi:36.00%/25件/lift+0.84 / lose_streak_1:37.21%/43件/lift+2.05 / lose_streak_2:45.45%/22件/lift+10.29 / lose_streak_3:63.64%/11件/lift+28.48 / 回収型</td>
+      <td class="num rate">35.87%</td>
+      <td class="num rate">43.24%</td>
+      <td class="num">516.62</td>
     </tr>
     
-    <tr data-search="870 攻殻機動隊 a 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 攻殻機動隊 攻殻" data-rank="A" data-machine="攻殻機動隊">
+    <tr data-search="820 モンスターハンターライズ s 台番勝率60.4% / 島勝率50.0% / 機種勝率49.8% / 荒波型 荒波型 mh1 1 " data-rank="S" data-machine="モンスターハンターライズ" data-type="荒波型">
       <td class="center rank-cell">4</td>
-      <td class="machine-no">870</td>
-      <td class="machine-name">攻殻機動隊</td>
-      <td class="score-cell">14</td>
-      <td><span class="badge rank-A">A</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">7,508</td>
-      <td class="num minus">-4,744</td>
-      <td class="num rate">18.94</td>
+      <td class="machine-no">820</td>
+      <td class="machine-name">モンスターハンターライズ</td>
+      <td class="score-cell">190.03</td>
+      <td><span class="badge rank-S">S</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率60.4% / 島勝率50.0% / 機種勝率49.8% / 荒波型</td>
+      <td class="num rate">60.40%</td>
+      <td class="num rate">49.83%</td>
+      <td class="num">694.56</td>
     </tr>
     
-    <tr data-search="1009 甲鉄城のカバネリ海門決戦 a 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="A" data-machine="甲鉄城のカバネリ海門決戦">
+    <tr data-search="998 シャーマンキング s 台番勝率59.6% / 機種勝率58.7% / 荒波型 荒波型 brtk 1 " data-rank="S" data-machine="シャーマンキング" data-type="荒波型">
       <td class="center rank-cell">5</td>
-      <td class="machine-no">1009</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">14</td>
-      <td><span class="badge rank-A">A</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">8,484</td>
-      <td class="num minus">-3,737</td>
-      <td class="num rate">14.42</td>
-    </tr>
-    
-    <tr data-search="869 攻殻機動隊 a 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 攻殻機動隊 攻殻" data-rank="A" data-machine="攻殻機動隊">
-      <td class="center rank-cell">6</td>
-      <td class="machine-no">869</td>
-      <td class="machine-name">攻殻機動隊</td>
-      <td class="score-cell">14</td>
-      <td><span class="badge rank-A">A</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">7,220</td>
-      <td class="num minus">-4,759</td>
-      <td class="num rate">12.12</td>
-    </tr>
-    
-    <tr data-search="600 モンキーターンv b 台番良台率25%以上+3 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="B" data-machine="モンキーターンV">
-      <td class="center rank-cell">7</td>
-      <td class="machine-no">600</td>
-      <td class="machine-name">モンキーターンV</td>
-      <td class="score-cell">13</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">台番良台率25%以上+3 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">8,380</td>
-      <td class="num minus">-3,452</td>
-      <td class="num rate">29.41</td>
-    </tr>
-    
-    <tr data-search="1037 甲鉄城のカバネリ海門決戦 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">8</td>
-      <td class="machine-no">1037</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">13</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 2日前良台+3</td>
-      <td class="num">8,988</td>
-      <td class="num minus">-248</td>
-      <td class="num rate">28.85</td>
-    </tr>
-    
-    <tr data-search="873 攻殻機動隊 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 攻殻機動隊 攻殻" data-rank="B" data-machine="攻殻機動隊">
-      <td class="center rank-cell">9</td>
-      <td class="machine-no">873</td>
-      <td class="machine-name">攻殻機動隊</td>
-      <td class="score-cell">13</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">7,715</td>
-      <td class="num minus">-3,044</td>
-      <td class="num rate">27.27</td>
-    </tr>
-    
-    <tr data-search="1017 甲鉄城のカバネリ海門決戦 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">10</td>
-      <td class="machine-no">1017</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">13</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 2日前良台+3</td>
-      <td class="num">8,041</td>
-      <td class="num minus">-939</td>
-      <td class="num rate">26.92</td>
-    </tr>
-    
-    <tr data-search="872 攻殻機動隊 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 攻殻機動隊 攻殻" data-rank="B" data-machine="攻殻機動隊">
-      <td class="center rank-cell">11</td>
-      <td class="machine-no">872</td>
-      <td class="machine-name">攻殻機動隊</td>
-      <td class="score-cell">13</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">4,635</td>
-      <td class="num minus">-3,501</td>
-      <td class="num rate">26.52</td>
-    </tr>
-    
-    <tr data-search="1011 甲鉄城のカバネリ海門決戦 b 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">12</td>
-      <td class="machine-no">1011</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">13</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">5,440</td>
-      <td class="num minus">-3,156</td>
-      <td class="num rate">21.15</td>
-    </tr>
-    
-    <tr data-search="851 戦国乙女5業火を穿つ宿焔の双刃 b 機種良台率25%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="B" data-machine="戦国乙女5業火を穿つ宿焔の双刃">
-      <td class="center rank-cell">13</td>
-      <td class="machine-no">851</td>
-      <td class="machine-name">戦国乙女5業火を穿つ宿焔の双刃</td>
-      <td class="score-cell">13</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率25%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">8,032</td>
-      <td class="num minus">-5,948</td>
-      <td class="num rate">17.32</td>
-    </tr>
-    
-    <tr data-search="837 スーパーリオエース2 b 機種良台率25%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 " data-rank="B" data-machine="スーパーリオエース2">
-      <td class="center rank-cell">14</td>
-      <td class="machine-no">837</td>
-      <td class="machine-name">スーパーリオエース2</td>
-      <td class="score-cell">13</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率25%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">8,117</td>
-      <td class="num minus">-4,838</td>
-      <td class="num rate">16.16</td>
-    </tr>
-    
-    <tr data-search="941 バイオハザードre:3 b 台番良台率25%以上+3 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="B" data-machine="バイオハザードRE:3">
-      <td class="center rank-cell">15</td>
-      <td class="machine-no">941</td>
-      <td class="machine-name">バイオハザードRE:3</td>
-      <td class="score-cell">12</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">台番良台率25%以上+3 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">7,061</td>
-      <td class="num minus">-5,427</td>
-      <td class="num rate">27.27</td>
-    </tr>
-    
-    <tr data-search="1036 甲鉄城のカバネリ海門決戦 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">16</td>
-      <td class="machine-no">1036</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">12</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1 / 2日前良台+3</td>
-      <td class="num">7,296</td>
-      <td class="num minus">-1,343</td>
-      <td class="num rate">26.92</td>
-    </tr>
-    
-    <tr data-search="1039 甲鉄城のカバネリ海門決戦 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">17</td>
-      <td class="machine-no">1039</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">12</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3</td>
-      <td class="num">8,483</td>
-      <td class="num minus">-2,440</td>
-      <td class="num rate">25.96</td>
-    </tr>
-    
-    <tr data-search="1078 北斗の拳 転生の章2 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="B" data-machine="北斗の拳 転生の章2">
-      <td class="center rank-cell">18</td>
-      <td class="machine-no">1078</td>
-      <td class="machine-name">北斗の拳 転生の章2</td>
-      <td class="score-cell">12</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">8,151</td>
-      <td class="num minus">-3,570</td>
-      <td class="num rate">12.50</td>
-    </tr>
-    
-    <tr data-search="1041 甲鉄城のカバネリ海門決戦 b 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">19</td>
-      <td class="machine-no">1041</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">11</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">8,802</td>
-      <td class="num minus">-1,085</td>
-      <td class="num rate">22.12</td>
-    </tr>
-    
-    <tr data-search="1107 東京喰種 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="B" data-machine="東京喰種">
-      <td class="center rank-cell">20</td>
-      <td class="machine-no">1107</td>
-      <td class="machine-name">東京喰種</td>
-      <td class="score-cell">11</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">5,823</td>
-      <td class="num minus">-3,168</td>
-      <td class="num rate">20.95</td>
-    </tr>
-    
-    <tr data-search="1010 甲鉄城のカバネリ海門決戦 b 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">21</td>
-      <td class="machine-no">1010</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">11</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3</td>
-      <td class="num">4,163</td>
-      <td class="num minus">-2,032</td>
-      <td class="num rate">18.27</td>
-    </tr>
-    
-    <tr data-search="1106 東京喰種 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="B" data-machine="東京喰種">
-      <td class="center rank-cell">22</td>
-      <td class="machine-no">1106</td>
-      <td class="machine-name">東京喰種</td>
-      <td class="score-cell">11</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">4,135</td>
-      <td class="num minus">-3,734</td>
-      <td class="num rate">17.14</td>
-    </tr>
-    
-    <tr data-search="1103 東京喰種 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="B" data-machine="東京喰種">
-      <td class="center rank-cell">23</td>
-      <td class="machine-no">1103</td>
-      <td class="machine-name">東京喰種</td>
-      <td class="score-cell">11</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">6,800</td>
-      <td class="num minus">-3,288</td>
-      <td class="num rate">14.29</td>
-    </tr>
-    
-    <tr data-search="1043 東京喰種 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="B" data-machine="東京喰種">
-      <td class="center rank-cell">24</td>
-      <td class="machine-no">1043</td>
-      <td class="machine-name">東京喰種</td>
-      <td class="score-cell">11</td>
-      <td><span class="badge rank-B">B</span></td>
-      <td class="reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">6,122</td>
-      <td class="num minus">-4,760</td>
-      <td class="num rate">10.91</td>
-    </tr>
-    
-    <tr data-search="1111 東京喰種 c 台番良台率30%以上+6 / 機種良台率20%以上+2 / 前日4000g以上+1 / 3日前良台+1 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="C" data-machine="東京喰種">
-      <td class="center rank-cell">25</td>
-      <td class="machine-no">1111</td>
-      <td class="machine-name">東京喰種</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">台番良台率30%以上+6 / 機種良台率20%以上+2 / 前日4000G以上+1 / 3日前良台+1</td>
-      <td class="num">6,979</td>
-      <td class="num minus">-1,810</td>
-      <td class="num rate">33.33</td>
-    </tr>
-    
-    <tr data-search="621 モンキーターンv c 台番良台率30%以上+6 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 3日前良台+1 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="C" data-machine="モンキーターンV">
-      <td class="center rank-cell">26</td>
-      <td class="machine-no">621</td>
-      <td class="machine-name">モンキーターンV</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">台番良台率30%以上+6 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 3日前良台+1</td>
-      <td class="num">9,759</td>
-      <td class="num minus">-553</td>
-      <td class="num rate">32.35</td>
-    </tr>
-    
-    <tr data-search="1029 甲鉄城のカバネリ海門決戦 c 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">27</td>
-      <td class="machine-no">1029</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1 / 3日前良台+1</td>
-      <td class="num">7,464</td>
-      <td class="num minus">-180</td>
-      <td class="num rate">26.92</td>
-    </tr>
-    
-    <tr data-search="998 シャーマンキング c 台番良台率25%以上+3 / 機種良台率20%以上+1 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 " data-rank="C" data-machine="シャーマンキング">
-      <td class="center rank-cell">28</td>
       <td class="machine-no">998</td>
       <td class="machine-name">シャーマンキング</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率20%以上+1 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">6,633</td>
-      <td class="num minus">-3,237</td>
-      <td class="num rate">25.00</td>
+      <td class="score-cell">187.72</td>
+      <td><span class="badge rank-S">S</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率59.6% / 機種勝率58.7% / 荒波型</td>
+      <td class="num rate">59.57%</td>
+      <td class="num rate">58.70%</td>
+      <td class="num">551.93</td>
     </tr>
     
-    <tr data-search="958 革命機ヴァルヴレイヴ2 c top50台番+1 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="C" data-machine="革命機ヴァルヴレイヴ2">
-      <td class="center rank-cell">29</td>
-      <td class="machine-no">958</td>
-      <td class="machine-name">革命機ヴァルヴレイヴ2</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">TOP50台番+1 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">7,266</td>
-      <td class="num minus">-3,620</td>
-      <td class="num rate">23.21</td>
-    </tr>
-    
-    <tr data-search="1022 甲鉄城のカバネリ海門決戦 c top50台番+1 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">30</td>
-      <td class="machine-no">1022</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">TOP50台番+1 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 3日前良台+1</td>
-      <td class="num">5,919</td>
-      <td class="num minus">-2,283</td>
-      <td class="num rate">23.08</td>
-    </tr>
-    
-    <tr data-search="852 戦国乙女5業火を穿つ宿焔の双刃 c top50台番+1 / 機種良台率25%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="C" data-machine="戦国乙女5業火を穿つ宿焔の双刃">
-      <td class="center rank-cell">31</td>
-      <td class="machine-no">852</td>
-      <td class="machine-name">戦国乙女5業火を穿つ宿焔の双刃</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">TOP50台番+1 / 機種良台率25%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">9,388</td>
-      <td class="num minus">-4,534</td>
-      <td class="num rate">22.83</td>
-    </tr>
-    
-    <tr data-search="927 炎炎ノ消防隊2 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1 炎炎ノ消防隊 炎炎ノ消防隊2 炎炎 炎炎ノ消防隊2" data-rank="C" data-machine="炎炎ノ消防隊2">
-      <td class="center rank-cell">32</td>
-      <td class="machine-no">927</td>
-      <td class="machine-name">炎炎ノ消防隊2</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">6,577</td>
-      <td class="num minus">-993</td>
-      <td class="num rate">22.00</td>
-    </tr>
-    
-    <tr data-search="1033 甲鉄城のカバネリ海門決戦 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">33</td>
-      <td class="machine-no">1033</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">7,668</td>
-      <td class="num minus">-148</td>
-      <td class="num rate">20.19</td>
-    </tr>
-    
-    <tr data-search="860 戦国乙女5業火を穿つ宿焔の双刃 c 機種良台率25%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="C" data-machine="戦国乙女5業火を穿つ宿焔の双刃">
-      <td class="center rank-cell">34</td>
-      <td class="machine-no">860</td>
-      <td class="machine-name">戦国乙女5業火を穿つ宿焔の双刃</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率25%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3</td>
-      <td class="num">8,434</td>
-      <td class="num minus">-2,544</td>
-      <td class="num rate">19.69</td>
-    </tr>
-    
-    <tr data-search="1031 甲鉄城のカバネリ海門決戦 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">35</td>
-      <td class="machine-no">1031</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">6,363</td>
-      <td class="num minus">-4,898</td>
-      <td class="num rate">19.23</td>
-    </tr>
-    
-    <tr data-search="826 スーパーブラックジャック c 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 / 3日前良台+1 " data-rank="C" data-machine="スーパーブラックジャック">
-      <td class="center rank-cell">36</td>
-      <td class="machine-no">826</td>
-      <td class="machine-name">スーパーブラックジャック</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">4,069</td>
-      <td class="num minus">-2,656</td>
-      <td class="num rate">18.57</td>
-    </tr>
-    
-    <tr data-search="1027 甲鉄城のカバネリ海門決戦 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">37</td>
-      <td class="machine-no">1027</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">4,671</td>
-      <td class="num minus">-3,447</td>
-      <td class="num rate">18.27</td>
-    </tr>
-    
-    <tr data-search="923 炎炎ノ消防隊2 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 炎炎ノ消防隊 炎炎ノ消防隊2 炎炎 炎炎ノ消防隊2" data-rank="C" data-machine="炎炎ノ消防隊2">
-      <td class="center rank-cell">38</td>
-      <td class="machine-no">923</td>
-      <td class="machine-name">炎炎ノ消防隊2</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">5,612</td>
-      <td class="num minus">-4,659</td>
-      <td class="num rate">16.88</td>
-    </tr>
-    
-    <tr data-search="987 銀河英雄伝説dieneuethese c 機種良台率20%以上+1 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="C" data-machine="銀河英雄伝説DieNeueThese">
-      <td class="center rank-cell">39</td>
-      <td class="machine-no">987</td>
-      <td class="machine-name">銀河英雄伝説DieNeueThese</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率20%以上+1 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">7,032</td>
-      <td class="num minus">-3,129</td>
-      <td class="num rate">16.54</td>
-    </tr>
-    
-    <tr data-search="1007 甲鉄城のカバネリ海門決戦 c 機種良台率25%以上+4 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">40</td>
-      <td class="machine-no">1007</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率25%以上+4 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 3日前良台+1</td>
-      <td class="num">3,675</td>
-      <td class="num minus">-3,414</td>
-      <td class="num rate">16.35</td>
-    </tr>
-    
-    <tr data-search="1001 からくりサーカス c 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="C" data-machine="からくりサーカス">
-      <td class="center rank-cell">41</td>
-      <td class="machine-no">1001</td>
-      <td class="machine-name">からくりサーカス</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">8,992</td>
-      <td class="num minus">-6,093</td>
-      <td class="num rate">16.07</td>
-    </tr>
-    
-    <tr data-search="973 かぐや様は告らせたい c 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 " data-rank="C" data-machine="かぐや様は告らせたい">
-      <td class="center rank-cell">42</td>
-      <td class="machine-no">973</td>
-      <td class="machine-name">かぐや様は告らせたい</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">5,232</td>
-      <td class="num minus">-4,093</td>
-      <td class="num rate">15.58</td>
-    </tr>
-    
-    <tr data-search="1060 東京喰種 c 機種良台率20%以上+2 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="C" data-machine="東京喰種">
-      <td class="center rank-cell">43</td>
-      <td class="machine-no">1060</td>
+    <tr data-search="1123 東京喰種 a 台番勝率高め48.1% / 島勝率高め44.8% / 機種勝率高め43.2% / 今日成立履歴+14.45 / prev1_hekomi:44.83%/29件/lift+0.00 / prev2_hekomi:62.07%/29件/lift+14.45 / lose_streak_1:39.47%/38件/lift+0.00 / lose_streak_2:40.00%/15件/lift+0.00 / 荒波型 荒波型 g5 46 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="A" data-machine="東京喰種" data-type="荒波型">
+      <td class="center rank-cell">6</td>
+      <td class="machine-no">1123</td>
       <td class="machine-name">東京喰種</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率20%以上+2 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">3,716</td>
-      <td class="num minus">-3,192</td>
-      <td class="num rate">14.29</td>
+      <td class="score-cell">186.99</td>
+      <td><span class="badge rank-A">A</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率高め48.1% / 島勝率高め44.8% / 機種勝率高め43.2% / 今日成立履歴+14.45 / prev1_hekomi:44.83%/29件/lift+0.00 / prev2_hekomi:62.07%/29件/lift+14.45 / lose_streak_1:39.47%/38件/lift+0.00 / lose_streak_2:40.00%/15件/lift+0.00 / 荒波型</td>
+      <td class="num rate">48.11%</td>
+      <td class="num rate">43.24%</td>
+      <td class="num">505.90</td>
     </tr>
     
-    <tr data-search="907 化物語 c 機種良台率20%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 " data-rank="C" data-machine="化物語">
-      <td class="center rank-cell">44</td>
-      <td class="machine-no">907</td>
-      <td class="machine-name">化物語</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3</td>
-      <td class="num">8,348</td>
-      <td class="num minus">-2,426</td>
-      <td class="num rate">11.11</td>
-    </tr>
-    
-    <tr data-search="611 モンキーターンv c 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="C" data-machine="モンキーターンV">
-      <td class="center rank-cell">45</td>
-      <td class="machine-no">611</td>
+    <tr data-search="619 モンキーターンv a 台番勝率高め45.8% / 島勝率高め41.4% / 今日成立履歴+24.40 / win_streak_1:69.23%/13件/lift+24.40 / win_streak_2:50.00%/4件/除外(sample&lt;10) / win_streak_3:0.00%/0件/除外(sample&lt;10) / 荒波型 荒波型 m2 20 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="A" data-machine="モンキーターンV" data-type="荒波型">
+      <td class="center rank-cell">7</td>
+      <td class="machine-no">619</td>
       <td class="machine-name">モンキーターンV</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</td>
-      <td class="num">9,958</td>
-      <td class="num minus">-3,550</td>
-      <td class="num rate">8.82</td>
+      <td class="score-cell">185.44</td>
+      <td><span class="badge rank-A">A</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率高め45.8% / 島勝率高め41.4% / 今日成立履歴+24.40 / win_streak_1:69.23%/13件/lift+24.40 / win_streak_2:50.00%/4件/除外(sample&lt;10) / win_streak_3:0.00%/0件/除外(sample&lt;10) / 荒波型</td>
+      <td class="num rate">45.76%</td>
+      <td class="num rate">40.38%</td>
+      <td class="num">459.23</td>
     </tr>
     
-    <tr data-search="997 バジリスク甲賀忍法帖絆2天膳blackedition c 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 / 3日前良台+1 " data-rank="C" data-machine="バジリスク甲賀忍法帖絆2天膳BLACKEDITION">
-      <td class="center rank-cell">46</td>
-      <td class="machine-no">997</td>
-      <td class="machine-name">バジリスク甲賀忍法帖絆2天膳BLACKEDITION</td>
-      <td class="score-cell">10</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 / 3日前良台+1</td>
-      <td class="num">5,378</td>
-      <td class="num minus">-2,633</td>
-      <td class="num rate"></td>
+    <tr data-search="961 革命機ヴァルヴレイヴ2 a 島勝率高め40.1% / 今日成立履歴+31.02 / win_streak_1:64.52%/31件/lift+22.77 / win_streak_2:50.00%/12件/lift+8.25 / 荒波型 荒波型 vvv1 4 ヴヴヴ ヴァルヴレイヴ" data-rank="A" data-machine="革命機ヴァルヴレイヴ2" data-type="荒波型">
+      <td class="center rank-cell">8</td>
+      <td class="machine-no">961</td>
+      <td class="machine-name">革命機ヴァルヴレイヴ2</td>
+      <td class="score-cell">184.37</td>
+      <td><span class="badge rank-A">A</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">島勝率高め40.1% / 今日成立履歴+31.02 / win_streak_1:64.52%/31件/lift+22.77 / win_streak_2:50.00%/12件/lift+8.25 / 荒波型</td>
+      <td class="num rate">42.31%</td>
+      <td class="num rate">40.11%</td>
+      <td class="num">629.32</td>
     </tr>
     
-    <tr data-search="1019 甲鉄城のカバネリ海門決戦 c 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">47</td>
-      <td class="machine-no">1019</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">9</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1</td>
-      <td class="num">6,529</td>
-      <td class="num minus">-1,269</td>
-      <td class="num rate">29.81</td>
+    <tr data-search="934 バイオハザード re:3 a 島勝率高め42.5% / 今日成立履歴+37.68 / prev1_hekomi:51.85%/27件/lift+16.61 / prev3_hekomi:48.15%/27件/lift+12.91 / lose_streak_1:43.40%/53件/lift+8.16 / 荒波型 荒波型 bh1 1 " data-rank="A" data-machine="バイオハザード RE:3" data-type="荒波型">
+      <td class="center rank-cell">9</td>
+      <td class="machine-no">934</td>
+      <td class="machine-name">バイオハザード RE:3</td>
+      <td class="score-cell">183.70</td>
+      <td><span class="badge rank-A">A</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">島勝率高め42.5% / 今日成立履歴+37.68 / prev1_hekomi:51.85%/27件/lift+16.61 / prev3_hekomi:48.15%/27件/lift+12.91 / lose_streak_1:43.40%/53件/lift+8.16 / 荒波型</td>
+      <td class="num rate">35.85%</td>
+      <td class="num rate">42.92%</td>
+      <td class="num">454.05</td>
     </tr>
     
-    <tr data-search="955 ミリオンゴッド-神々の軌跡- c 台番良台率25%以上+3 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 " data-rank="C" data-machine="ミリオンゴッド-神々の軌跡-">
-      <td class="center rank-cell">48</td>
-      <td class="machine-no">955</td>
-      <td class="machine-name">ミリオンゴッド-神々の軌跡-</td>
-      <td class="score-cell">9</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">台番良台率25%以上+3 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">6,927</td>
-      <td class="num minus">-6,291</td>
-      <td class="num rate">25.97</td>
+    <tr data-search="802 真打 吉宗 a 台番勝率高め47.4% / 今日成立履歴+25.13 / prev1_hekomi:61.29%/31件/lift+14.62 / prev2_hekomi:50.00%/30件/lift+3.33 / lose_streak_1:53.85%/39件/lift+7.18 / lose_streak_2:41.18%/17件/lift+0.00 / 荒波型 荒波型 ym1 1 " data-rank="A" data-machine="真打 吉宗" data-type="荒波型">
+      <td class="center rank-cell">10</td>
+      <td class="machine-no">802</td>
+      <td class="machine-name">真打 吉宗</td>
+      <td class="score-cell">183.67</td>
+      <td><span class="badge rank-A">A</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率高め47.4% / 今日成立履歴+25.13 / prev1_hekomi:61.29%/31件/lift+14.62 / prev2_hekomi:50.00%/30件/lift+3.33 / lose_streak_1:53.85%/39件/lift+7.18 / lose_streak_2:41.18%/17件/lift+0.00 / 荒波型</td>
+      <td class="num rate">47.37%</td>
+      <td class="num rate">37.78%</td>
+      <td class="num">678.70</td>
     </tr>
     
-    <tr data-search="1008 甲鉄城のカバネリ海門決戦 c 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <td class="center rank-cell">49</td>
-      <td class="machine-no">1008</td>
-      <td class="machine-name">甲鉄城のカバネリ海門決戦</td>
-      <td class="score-cell">9</td>
-      <td><span class="badge rank-C">C</span></td>
-      <td class="reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1</td>
-      <td class="num">6,179</td>
-      <td class="num minus">-1,288</td>
-      <td class="num rate">25.00</td>
-    </tr>
-    
-    <tr data-search="828 スーパーブラックジャック c top50台番+1 / 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 " data-rank="C" data-machine="スーパーブラックジャック">
-      <td class="center rank-cell">50</td>
+    <tr data-search="828 スーパーブラックジャック b 台番勝率高め49.4% / 島勝率高め43.9% / 機種勝率高め44.0% / 今日成立履歴+14.23 / prev1_hekomi:60.00%/15件/lift+11.19 / lose_streak_1:51.85%/27件/lift+3.04 / 荒波型 荒波型 sbj1 3 " data-rank="B" data-machine="スーパーブラックジャック" data-type="荒波型">
+      <td class="center rank-cell">11</td>
       <td class="machine-no">828</td>
       <td class="machine-name">スーパーブラックジャック</td>
-      <td class="score-cell">9</td>
+      <td class="score-cell">182.34</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率高め49.4% / 島勝率高め43.9% / 機種勝率高め44.0% / 今日成立履歴+14.23 / prev1_hekomi:60.00%/15件/lift+11.19 / lose_streak_1:51.85%/27件/lift+3.04 / 荒波型</td>
+      <td class="num rate">49.41%</td>
+      <td class="num rate">44.04%</td>
+      <td class="num">547.39</td>
+    </tr>
+    
+    <tr data-search="1039 甲鉄城のカバネリ 海門(うなと)決戦 b 台番勝率高め46.0% / 島勝率高め44.6% / 機種勝率高め43.9% / 今日成立履歴+10.49 / prev1_hekomi:54.05%/37件/lift+7.71 / lose_streak_1:49.12%/57件/lift+2.78 / 荒波型 荒波型 k2 34 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ 海門(うなと)決戦" data-type="荒波型">
+      <td class="center rank-cell">12</td>
+      <td class="machine-no">1039</td>
+      <td class="machine-name">甲鉄城のカバネリ 海門(うなと)決戦</td>
+      <td class="score-cell">181.52</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率高め46.0% / 島勝率高め44.6% / 機種勝率高め43.9% / 今日成立履歴+10.49 / prev1_hekomi:54.05%/37件/lift+7.71 / lose_streak_1:49.12%/57件/lift+2.78 / 荒波型</td>
+      <td class="num rate">45.97%</td>
+      <td class="num rate">43.87%</td>
+      <td class="num">752.16</td>
+    </tr>
+    
+    <tr data-search="1101 北斗の拳 転生の章2 b 今日成立履歴+40.40 / prev1_hekomi:41.38%/29件/lift+7.09 / prev2_hekomi:50.00%/24件/lift+15.71 / lose_streak_1:38.18%/55件/lift+3.89 / lose_streak_2:48.00%/25件/lift+13.71 / 荒波型 荒波型 h4 24 " data-rank="B" data-machine="北斗の拳 転生の章2" data-type="荒波型">
+      <td class="center rank-cell">13</td>
+      <td class="machine-no">1101</td>
+      <td class="machine-name">北斗の拳 転生の章2</td>
+      <td class="score-cell">181.18</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">今日成立履歴+40.40 / prev1_hekomi:41.38%/29件/lift+7.09 / prev2_hekomi:50.00%/24件/lift+15.71 / lose_streak_1:38.18%/55件/lift+3.89 / lose_streak_2:48.00%/25件/lift+13.71 / 荒波型</td>
+      <td class="num rate">34.91%</td>
+      <td class="num rate">38.04%</td>
+      <td class="num">481.34</td>
+    </tr>
+    
+    <tr data-search="810 鉄拳6 b 島勝率高め42.0% / 今日成立履歴+24.61 / prev1_hekomi:47.62%/21件/lift+5.57 / prev2_hekomi:44.44%/18件/lift+2.39 / lose_streak_1:42.42%/33件/lift+0.37 / lose_streak_2:58.33%/12件/lift+16.28 / 荒波型 荒波型 tk1 3 " data-rank="B" data-machine="鉄拳6" data-type="荒波型">
+      <td class="center rank-cell">14</td>
+      <td class="machine-no">810</td>
+      <td class="machine-name">鉄拳6</td>
+      <td class="score-cell">180.29</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">島勝率高め42.0% / 今日成立履歴+24.61 / prev1_hekomi:47.62%/21件/lift+5.57 / prev2_hekomi:44.44%/18件/lift+2.39 / lose_streak_1:42.42%/33件/lift+0.37 / lose_streak_2:58.33%/12件/lift+16.28 / 荒波型</td>
+      <td class="num rate">42.70%</td>
+      <td class="num rate">41.29%</td>
+      <td class="num">361.38</td>
+    </tr>
+    
+    <tr data-search="1076 スマスロ北斗の拳 b 今日成立履歴+42.59 / prev1_hekomi:50.00%/18件/lift+14.56 / prev3_hekomi:47.06%/17件/lift+11.62 / lose_streak_1:51.85%/27件/lift+16.41 / 回収型 回収型 sh3 11 " data-rank="B" data-machine="スマスロ北斗の拳" data-type="回収型">
+      <td class="center rank-cell">15</td>
+      <td class="machine-no">1076</td>
+      <td class="machine-name">スマスロ北斗の拳</td>
+      <td class="score-cell">180.21</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-collect">回収型</span></td>
+      <td class="reason">今日成立履歴+42.59 / prev1_hekomi:50.00%/18件/lift+14.56 / prev3_hekomi:47.06%/17件/lift+11.62 / lose_streak_1:51.85%/27件/lift+16.41 / 回収型</td>
+      <td class="num rate">35.00%</td>
+      <td class="num rate">39.24%</td>
+      <td class="num">439.43</td>
+    </tr>
+    
+    <tr data-search="852 戦国乙女5 b 台番勝率高め45.6% / 島勝率高め42.0% / 今日成立履歴+19.53 / prev1_hekomi:39.29%/28件/lift+0.00 / prev2_hekomi:55.17%/29件/lift+9.09 / prev3_hekomi:56.52%/23件/lift+10.44 / lose_streak_1:38.10%/42件/lift+0.00 / lose_streak_2:35.00%/20件/lift+0.00 / lose_streak_3:55.56%/9件/除外(sample&lt;10) / 荒波型 荒波型 so1 3 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="B" data-machine="戦国乙女5" data-type="荒波型">
+      <td class="center rank-cell">16</td>
+      <td class="machine-no">852</td>
+      <td class="machine-name">戦国乙女5</td>
+      <td class="score-cell">180.12</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率高め45.6% / 島勝率高め42.0% / 今日成立履歴+19.53 / prev1_hekomi:39.29%/28件/lift+0.00 / prev2_hekomi:55.17%/29件/lift+9.09 / prev3_hekomi:56.52%/23件/lift+10.44 / lose_streak_1:38.10%/42件/lift+0.00 / lose_streak_2:35.00%/20件/lift+0.00 / lose_streak_3:55.56%/9件/除外(sample&lt;10) / 荒波型</td>
+      <td class="num rate">45.63%</td>
+      <td class="num rate">42.04%</td>
+      <td class="num">562.59</td>
+    </tr>
+    
+    <tr data-search="964 革命機ヴァルヴレイヴ2 b 島勝率高め40.1% / 今日成立履歴+32.27 / prev1_hekomi:56.00%/25件/lift+18.00 / lose_streak_1:52.27%/44件/lift+14.27 / 荒波型 荒波型 vvv1 7 ヴヴヴ ヴァルヴレイヴ" data-rank="B" data-machine="革命機ヴァルヴレイヴ2" data-type="荒波型">
+      <td class="center rank-cell">17</td>
+      <td class="machine-no">964</td>
+      <td class="machine-name">革命機ヴァルヴレイヴ2</td>
+      <td class="score-cell">179.05</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">島勝率高め40.1% / 今日成立履歴+32.27 / prev1_hekomi:56.00%/25件/lift+18.00 / lose_streak_1:52.27%/44件/lift+14.27 / 荒波型</td>
+      <td class="num rate">37.62%</td>
+      <td class="num rate">40.11%</td>
+      <td class="num">378.25</td>
+    </tr>
+    
+    <tr data-search="940 バイオハザード re:3 b 台番勝率高め48.2% / 島勝率高め42.5% / 今日成立履歴+13.09 / prev1_hekomi:50.00%/14件/lift+1.19 / prev3_hekomi:46.15%/13件/lift+0.00 / lose_streak_1:60.71%/28件/lift+11.90 / 荒波型 荒波型 bh1 7 " data-rank="B" data-machine="バイオハザード RE:3" data-type="荒波型">
+      <td class="center rank-cell">18</td>
+      <td class="machine-no">940</td>
+      <td class="machine-name">バイオハザード RE:3</td>
+      <td class="score-cell">178.42</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率高め48.2% / 島勝率高め42.5% / 今日成立履歴+13.09 / prev1_hekomi:50.00%/14件/lift+1.19 / prev3_hekomi:46.15%/13件/lift+0.00 / lose_streak_1:60.71%/28件/lift+11.90 / 荒波型</td>
+      <td class="num rate">48.24%</td>
+      <td class="num rate">42.92%</td>
+      <td class="num">486.39</td>
+    </tr>
+    
+    <tr data-search="997 バジリスク～甲賀忍法帖～絆2 天膳 black edition b 台番勝率50.0% / 島勝率50.0% / 機種勝率55.6% / 荒波型 荒波型 brk1 1 " data-rank="B" data-machine="バジリスク～甲賀忍法帖～絆2 天膳 BLACK EDITION" data-type="荒波型">
+      <td class="center rank-cell">19</td>
+      <td class="machine-no">997</td>
+      <td class="machine-name">バジリスク～甲賀忍法帖～絆2 天膳 BLACK EDITION</td>
+      <td class="score-cell">177.29</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率50.0% / 島勝率50.0% / 機種勝率55.6% / 荒波型</td>
+      <td class="num rate">50.00%</td>
+      <td class="num rate">55.56%</td>
+      <td class="num">400.00</td>
+    </tr>
+    
+    <tr data-search="603 モンキーターンv b 台番勝率50.9% / 島勝率高め40.3% / 今日成立履歴+9.82 / win_streak_1:61.54%/13件/lift+9.82 / 荒波型 荒波型 m1 4 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="B" data-machine="モンキーターンV" data-type="荒波型">
+      <td class="center rank-cell">20</td>
+      <td class="machine-no">603</td>
+      <td class="machine-name">モンキーターンV</td>
+      <td class="score-cell">176.21</td>
+      <td><span class="badge rank-B">B</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率50.9% / 島勝率高め40.3% / 今日成立履歴+9.82 / win_streak_1:61.54%/13件/lift+9.82 / 荒波型</td>
+      <td class="num rate">50.85%</td>
+      <td class="num rate">40.38%</td>
+      <td class="num">476.54</td>
+    </tr>
+    
+    <tr data-search="823 ゴッドイーター リザレクション c 台番勝率51.9% / 島勝率48.8% / 機種勝率48.7% / 今日成立履歴+0.07 / win_streak_1:51.61%/62件/lift+0.07 / 荒波型 荒波型 ger1 1 " data-rank="C" data-machine="ゴッドイーター リザレクション" data-type="荒波型">
+      <td class="center rank-cell">21</td>
+      <td class="machine-no">823</td>
+      <td class="machine-name">ゴッドイーター リザレクション</td>
+      <td class="score-cell">176.21</td>
       <td><span class="badge rank-C">C</span></td>
-      <td class="reason">TOP50台番+1 / 機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</td>
-      <td class="num">6,718</td>
-      <td class="num minus">-3,926</td>
-      <td class="num rate">24.29</td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率51.9% / 島勝率48.8% / 機種勝率48.7% / 今日成立履歴+0.07 / win_streak_1:51.61%/62件/lift+0.07 / 荒波型</td>
+      <td class="num rate">51.91%</td>
+      <td class="num rate">48.69%</td>
+      <td class="num">639.14</td>
+    </tr>
+    
+    <tr data-search="825 ゴッドイーター リザレクション c 台番勝率51.5% / 島勝率48.8% / 機種勝率48.7% / 荒波型 荒波型 ger1 3 " data-rank="C" data-machine="ゴッドイーター リザレクション" data-type="荒波型">
+      <td class="center rank-cell">22</td>
+      <td class="machine-no">825</td>
+      <td class="machine-name">ゴッドイーター リザレクション</td>
+      <td class="score-cell">176.05</td>
+      <td><span class="badge rank-C">C</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率51.5% / 島勝率48.8% / 機種勝率48.7% / 荒波型</td>
+      <td class="num rate">51.52%</td>
+      <td class="num rate">48.69%</td>
+      <td class="num">677.49</td>
+    </tr>
+    
+    <tr data-search="1033 甲鉄城のカバネリ 海門(うなと)決戦 c 台番勝率51.7% / 島勝率高め44.6% / 機種勝率高め43.9% / 荒波型 荒波型 k2 28 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ 海門(うなと)決戦" data-type="荒波型">
+      <td class="center rank-cell">23</td>
+      <td class="machine-no">1033</td>
+      <td class="machine-name">甲鉄城のカバネリ 海門(うなと)決戦</td>
+      <td class="score-cell">175.55</td>
+      <td><span class="badge rank-C">C</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率51.7% / 島勝率高め44.6% / 機種勝率高め43.9% / 荒波型</td>
+      <td class="num rate">51.69%</td>
+      <td class="num rate">43.87%</td>
+      <td class="num">501.23</td>
+    </tr>
+    
+    <tr data-search="1100 北斗の拳 転生の章2 c 台番勝率高め46.8% / 今日成立履歴+14.46 / win_streak_1:61.90%/21件/lift+14.46 / 荒波型 荒波型 h4 23 " data-rank="C" data-machine="北斗の拳 転生の章2" data-type="荒波型">
+      <td class="center rank-cell">24</td>
+      <td class="machine-no">1100</td>
+      <td class="machine-name">北斗の拳 転生の章2</td>
+      <td class="score-cell">174.97</td>
+      <td><span class="badge rank-C">C</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率高め46.8% / 今日成立履歴+14.46 / win_streak_1:61.90%/21件/lift+14.46 / 荒波型</td>
+      <td class="num rate">46.84%</td>
+      <td class="num rate">38.04%</td>
+      <td class="num">680.32</td>
+    </tr>
+    
+    <tr data-search="602 モンキーターンv c 島勝率高め40.3% / 今日成立履歴+17.36 / prev3_hekomi:57.14%/7件/除外(sample&lt;10) / lose_streak_1:61.11%/18件/lift+17.36 / 荒波型 荒波型 m1 3 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="C" data-machine="モンキーターンV" data-type="荒波型">
+      <td class="center rank-cell">25</td>
+      <td class="machine-no">602</td>
+      <td class="machine-name">モンキーターンV</td>
+      <td class="score-cell">174.74</td>
+      <td><span class="badge rank-C">C</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">島勝率高め40.3% / 今日成立履歴+17.36 / prev3_hekomi:57.14%/7件/除外(sample&lt;10) / lose_streak_1:61.11%/18件/lift+17.36 / 荒波型</td>
+      <td class="num rate">44.62%</td>
+      <td class="num rate">40.38%</td>
+      <td class="num">335.77</td>
+    </tr>
+    
+    <tr data-search="872 攻殻機動隊 c 今日成立履歴+21.19 / prev2_hekomi:48.65%/37件/lift+6.13 / lose_streak_1:41.54%/65件/lift+0.00 / lose_streak_2:57.58%/33件/lift+15.06 / 荒波型 荒波型 kkk1 5 攻殻機動隊 攻殻" data-rank="C" data-machine="攻殻機動隊" data-type="荒波型">
+      <td class="center rank-cell">26</td>
+      <td class="machine-no">872</td>
+      <td class="machine-name">攻殻機動隊</td>
+      <td class="score-cell">173.72</td>
+      <td><span class="badge rank-C">C</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">今日成立履歴+21.19 / prev2_hekomi:48.65%/37件/lift+6.13 / lose_streak_1:41.54%/65件/lift+0.00 / lose_streak_2:57.58%/33件/lift+15.06 / 荒波型</td>
+      <td class="num rate">42.19%</td>
+      <td class="num rate">40.03%</td>
+      <td class="num">507.80</td>
+    </tr>
+    
+    <tr data-search="821 モンスターハンターライズ c 台番勝率高め46.1% / 島勝率50.0% / 機種勝率49.8% / 今日成立履歴+7.13 / win_streak_1:53.66%/41件/lift+7.13 / 荒波型 荒波型 mh1 2 " data-rank="C" data-machine="モンスターハンターライズ" data-type="荒波型">
+      <td class="center rank-cell">27</td>
+      <td class="machine-no">821</td>
+      <td class="machine-name">モンスターハンターライズ</td>
+      <td class="score-cell">173.44</td>
+      <td><span class="badge rank-C">C</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率高め46.1% / 島勝率50.0% / 機種勝率49.8% / 今日成立履歴+7.13 / win_streak_1:53.66%/41件/lift+7.13 / 荒波型</td>
+      <td class="num rate">46.08%</td>
+      <td class="num rate">49.83%</td>
+      <td class="num">754.63</td>
+    </tr>
+    
+    <tr data-search="936 バイオハザード re:3 c 台番勝率50.5% / 島勝率高め42.5% / 今日成立履歴+4.47 / win_streak_1:55.56%/27件/lift+4.47 / 荒波型 荒波型 bh1 3 " data-rank="C" data-machine="バイオハザード RE:3" data-type="荒波型">
+      <td class="center rank-cell">28</td>
+      <td class="machine-no">936</td>
+      <td class="machine-name">バイオハザード RE:3</td>
+      <td class="score-cell">173.12</td>
+      <td><span class="badge rank-C">C</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率50.5% / 島勝率高め42.5% / 今日成立履歴+4.47 / win_streak_1:55.56%/27件/lift+4.47 / 荒波型</td>
+      <td class="num rate">50.54%</td>
+      <td class="num rate">42.92%</td>
+      <td class="num">483.93</td>
+    </tr>
+    
+    <tr data-search="829 戦国乙女4 戦乱に閃く炯眼の軍師 c 台番勝率52.0% / 島勝率45.3% / 機種勝率高め44.9% / 荒波型 荒波型 sos1 1 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="C" data-machine="戦国乙女4 戦乱に閃く炯眼の軍師" data-type="荒波型">
+      <td class="center rank-cell">29</td>
+      <td class="machine-no">829</td>
+      <td class="machine-name">戦国乙女4 戦乱に閃く炯眼の軍師</td>
+      <td class="score-cell">172.63</td>
+      <td><span class="badge rank-C">C</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">台番勝率52.0% / 島勝率45.3% / 機種勝率高め44.9% / 荒波型</td>
+      <td class="num rate">52.00%</td>
+      <td class="num rate">44.90%</td>
+      <td class="num">282.68</td>
+    </tr>
+    
+    <tr data-search="898 化物語 c 島勝率高め43.9% / 機種勝率高め43.6% / 今日成立履歴+12.96 / win_streak_1:46.15%/39件/lift+2.63 / win_streak_2:53.85%/13件/lift+10.33 / 荒波型 荒波型 bm1 1 " data-rank="C" data-machine="化物語" data-type="荒波型">
+      <td class="center rank-cell">30</td>
+      <td class="machine-no">898</td>
+      <td class="machine-name">化物語</td>
+      <td class="score-cell">172.27</td>
+      <td><span class="badge rank-C">C</span></td>
+      <td><span class="type-badge type-rough">荒波型</span></td>
+      <td class="reason">島勝率高め43.9% / 機種勝率高め43.6% / 今日成立履歴+12.96 / win_streak_1:46.15%/39件/lift+2.63 / win_streak_2:53.85%/13件/lift+10.33 / 荒波型</td>
+      <td class="num rate">44.04%</td>
+      <td class="num rate">43.61%</td>
+      <td class="num">650.44</td>
     </tr>
     
       </tbody>
@@ -1125,865 +569,565 @@ tr:hover {
 
   <div class="mobile-list" id="mobileList">
     
-    <div class="m-card" data-search="1034 甲鉄城のカバネリ海門決戦 a 台番良台率30%以上+6 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="A" data-machine="甲鉄城のカバネリ海門決戦">
+    <div class="m-card" data-search="1058 東京喰種 s 台番勝率56.1% / 島勝率高め44.6% / 機種勝率高め43.2% / 今日成立履歴+24.44 / prev1_hekomi:80.00%/10件/lift+24.44 / lose_streak_1:52.63%/19件/lift+0.00 / 荒波型 荒波型 g2 17 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="S" data-machine="東京喰種" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">🥇</div>
-        <div class="m-no">1034</div>
-        <div class="m-score">Score 14</div>
-        <div><span class="badge rank-A">A</span></div>
+        <div class="m-no">1058</div>
+        <div class="m-score">Score 203.09</div>
+        <div><span class="badge rank-S">S</span></div>
       </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
+      <div class="m-name">東京喰種</div>
+      <div class="m-subline">島 G2 / 位置 17 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>8,230</b></div>
-        <div><span>最沈み</span><b class="minus">-1,031</b></div>
-        <div><span>台番率</span><b>30.77%</b></div>
+        <div><span>台番勝率</span><b>56.10%</b></div>
+        <div><span>機種勝率</span><b>43.24%</b></div>
+        <div><span>履歴</span><b>521.40</b></div>
       </div>
-      <div class="m-reason">台番良台率30%以上+6 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 3日前良台+1</div>
+      <div class="m-reason">台番勝率56.1% / 島勝率高め44.6% / 機種勝率高め43.2% / 今日成立履歴+24.44 / prev1_hekomi:80.00%/10件/lift+24.44 / lose_streak_1:52.63%/19件/lift+0.00 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="1048 東京喰種 a 台番良台率30%以上+6 / 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="A" data-machine="東京喰種">
+    <div class="m-card" data-search="807 birdie wing s 台番勝率66.7% / 島勝率50.0% / 機種勝率48.4% / 荒波型 荒波型 bw1 3 " data-rank="S" data-machine="BIRDIE WING" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">🥈</div>
-        <div class="m-no">1048</div>
-        <div class="m-score">Score 14</div>
+        <div class="m-no">807</div>
+        <div class="m-score">Score 199.21</div>
+        <div><span class="badge rank-S">S</span></div>
+      </div>
+      <div class="m-name">BIRDIE WING</div>
+      <div class="m-subline">島 BW1 / 位置 3 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>66.67%</b></div>
+        <div><span>機種勝率</span><b>48.39%</b></div>
+        <div><span>履歴</span><b>426.19</b></div>
+      </div>
+      <div class="m-reason">台番勝率66.7% / 島勝率50.0% / 機種勝率48.4% / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="1064 東京喰種 s 島勝率高め44.6% / 機種勝率高め43.2% / 今日成立履歴+47.24 / prev1_hekomi:40.74%/27件/lift+5.58 / prev3_hekomi:36.00%/25件/lift+0.84 / lose_streak_1:37.21%/43件/lift+2.05 / lose_streak_2:45.45%/22件/lift+10.29 / lose_streak_3:63.64%/11件/lift+28.48 / 回収型 回収型 g2 23 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="S" data-machine="東京喰種" data-type="回収型">
+      <div class="m-top">
+        <div class="m-rank">🥉</div>
+        <div class="m-no">1064</div>
+        <div class="m-score">Score 197.28</div>
+        <div><span class="badge rank-S">S</span></div>
+      </div>
+      <div class="m-name">東京喰種</div>
+      <div class="m-subline">島 G2 / 位置 23 / <span class="type-badge type-collect">回収型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>35.87%</b></div>
+        <div><span>機種勝率</span><b>43.24%</b></div>
+        <div><span>履歴</span><b>516.62</b></div>
+      </div>
+      <div class="m-reason">島勝率高め44.6% / 機種勝率高め43.2% / 今日成立履歴+47.24 / prev1_hekomi:40.74%/27件/lift+5.58 / prev3_hekomi:36.00%/25件/lift+0.84 / lose_streak_1:37.21%/43件/lift+2.05 / lose_streak_2:45.45%/22件/lift+10.29 / lose_streak_3:63.64%/11件/lift+28.48 / 回収型</div>
+    </div>
+    
+    <div class="m-card" data-search="820 モンスターハンターライズ s 台番勝率60.4% / 島勝率50.0% / 機種勝率49.8% / 荒波型 荒波型 mh1 1 " data-rank="S" data-machine="モンスターハンターライズ" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">4</div>
+        <div class="m-no">820</div>
+        <div class="m-score">Score 190.03</div>
+        <div><span class="badge rank-S">S</span></div>
+      </div>
+      <div class="m-name">モンスターハンターライズ</div>
+      <div class="m-subline">島 MH1 / 位置 1 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>60.40%</b></div>
+        <div><span>機種勝率</span><b>49.83%</b></div>
+        <div><span>履歴</span><b>694.56</b></div>
+      </div>
+      <div class="m-reason">台番勝率60.4% / 島勝率50.0% / 機種勝率49.8% / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="998 シャーマンキング s 台番勝率59.6% / 機種勝率58.7% / 荒波型 荒波型 brtk 1 " data-rank="S" data-machine="シャーマンキング" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">5</div>
+        <div class="m-no">998</div>
+        <div class="m-score">Score 187.72</div>
+        <div><span class="badge rank-S">S</span></div>
+      </div>
+      <div class="m-name">シャーマンキング</div>
+      <div class="m-subline">島 BRTK / 位置 1 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>59.57%</b></div>
+        <div><span>機種勝率</span><b>58.70%</b></div>
+        <div><span>履歴</span><b>551.93</b></div>
+      </div>
+      <div class="m-reason">台番勝率59.6% / 機種勝率58.7% / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="1123 東京喰種 a 台番勝率高め48.1% / 島勝率高め44.8% / 機種勝率高め43.2% / 今日成立履歴+14.45 / prev1_hekomi:44.83%/29件/lift+0.00 / prev2_hekomi:62.07%/29件/lift+14.45 / lose_streak_1:39.47%/38件/lift+0.00 / lose_streak_2:40.00%/15件/lift+0.00 / 荒波型 荒波型 g5 46 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="A" data-machine="東京喰種" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">6</div>
+        <div class="m-no">1123</div>
+        <div class="m-score">Score 186.99</div>
         <div><span class="badge rank-A">A</span></div>
       </div>
       <div class="m-name">東京喰種</div>
+      <div class="m-subline">島 G5 / 位置 46 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>5,702</b></div>
-        <div><span>最沈み</span><b class="minus">-4,634</b></div>
-        <div><span>台番率</span><b>30.26%</b></div>
+        <div><span>台番勝率</span><b>48.11%</b></div>
+        <div><span>機種勝率</span><b>43.24%</b></div>
+        <div><span>履歴</span><b>505.90</b></div>
       </div>
-      <div class="m-reason">台番良台率30%以上+6 / 機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
+      <div class="m-reason">台番勝率高め48.1% / 島勝率高め44.8% / 機種勝率高め43.2% / 今日成立履歴+14.45 / prev1_hekomi:44.83%/29件/lift+0.00 / prev2_hekomi:62.07%/29件/lift+14.45 / lose_streak_1:39.47%/38件/lift+0.00 / lose_streak_2:40.00%/15件/lift+0.00 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="836 スーパーリオエース2 a 台番良台率25%以上+3 / 機種良台率25%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="A" data-machine="スーパーリオエース2">
-      <div class="m-top">
-        <div class="m-rank">🥉</div>
-        <div class="m-no">836</div>
-        <div class="m-score">Score 14</div>
-        <div><span class="badge rank-A">A</span></div>
-      </div>
-      <div class="m-name">スーパーリオエース2</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>7,615</b></div>
-        <div><span>最沈み</span><b class="minus">-5,138</b></div>
-        <div><span>台番率</span><b>27.27%</b></div>
-      </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="870 攻殻機動隊 a 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 攻殻機動隊 攻殻" data-rank="A" data-machine="攻殻機動隊">
-      <div class="m-top">
-        <div class="m-rank">4</div>
-        <div class="m-no">870</div>
-        <div class="m-score">Score 14</div>
-        <div><span class="badge rank-A">A</span></div>
-      </div>
-      <div class="m-name">攻殻機動隊</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>7,508</b></div>
-        <div><span>最沈み</span><b class="minus">-4,744</b></div>
-        <div><span>台番率</span><b>18.94%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="1009 甲鉄城のカバネリ海門決戦 a 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="A" data-machine="甲鉄城のカバネリ海門決戦">
-      <div class="m-top">
-        <div class="m-rank">5</div>
-        <div class="m-no">1009</div>
-        <div class="m-score">Score 14</div>
-        <div><span class="badge rank-A">A</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>8,484</b></div>
-        <div><span>最沈み</span><b class="minus">-3,737</b></div>
-        <div><span>台番率</span><b>14.42%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="869 攻殻機動隊 a 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 攻殻機動隊 攻殻" data-rank="A" data-machine="攻殻機動隊">
-      <div class="m-top">
-        <div class="m-rank">6</div>
-        <div class="m-no">869</div>
-        <div class="m-score">Score 14</div>
-        <div><span class="badge rank-A">A</span></div>
-      </div>
-      <div class="m-name">攻殻機動隊</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>7,220</b></div>
-        <div><span>最沈み</span><b class="minus">-4,759</b></div>
-        <div><span>台番率</span><b>12.12%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="600 モンキーターンv b 台番良台率25%以上+3 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="B" data-machine="モンキーターンV">
+    <div class="m-card" data-search="619 モンキーターンv a 台番勝率高め45.8% / 島勝率高め41.4% / 今日成立履歴+24.40 / win_streak_1:69.23%/13件/lift+24.40 / win_streak_2:50.00%/4件/除外(sample&lt;10) / win_streak_3:0.00%/0件/除外(sample&lt;10) / 荒波型 荒波型 m2 20 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="A" data-machine="モンキーターンV" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">7</div>
-        <div class="m-no">600</div>
-        <div class="m-score">Score 13</div>
-        <div><span class="badge rank-B">B</span></div>
+        <div class="m-no">619</div>
+        <div class="m-score">Score 185.44</div>
+        <div><span class="badge rank-A">A</span></div>
       </div>
       <div class="m-name">モンキーターンV</div>
+      <div class="m-subline">島 M2 / 位置 20 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>8,380</b></div>
-        <div><span>最沈み</span><b class="minus">-3,452</b></div>
-        <div><span>台番率</span><b>29.41%</b></div>
+        <div><span>台番勝率</span><b>45.76%</b></div>
+        <div><span>機種勝率</span><b>40.38%</b></div>
+        <div><span>履歴</span><b>459.23</b></div>
       </div>
-      <div class="m-reason">台番良台率25%以上+3 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
+      <div class="m-reason">台番勝率高め45.8% / 島勝率高め41.4% / 今日成立履歴+24.40 / win_streak_1:69.23%/13件/lift+24.40 / win_streak_2:50.00%/4件/除外(sample&lt;10) / win_streak_3:0.00%/0件/除外(sample&lt;10) / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="1037 甲鉄城のカバネリ海門決戦 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
+    <div class="m-card" data-search="961 革命機ヴァルヴレイヴ2 a 島勝率高め40.1% / 今日成立履歴+31.02 / win_streak_1:64.52%/31件/lift+22.77 / win_streak_2:50.00%/12件/lift+8.25 / 荒波型 荒波型 vvv1 4 ヴヴヴ ヴァルヴレイヴ" data-rank="A" data-machine="革命機ヴァルヴレイヴ2" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">8</div>
-        <div class="m-no">1037</div>
-        <div class="m-score">Score 13</div>
-        <div><span class="badge rank-B">B</span></div>
+        <div class="m-no">961</div>
+        <div class="m-score">Score 184.37</div>
+        <div><span class="badge rank-A">A</span></div>
       </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
+      <div class="m-name">革命機ヴァルヴレイヴ2</div>
+      <div class="m-subline">島 VVV1 / 位置 4 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>8,988</b></div>
-        <div><span>最沈み</span><b class="minus">-248</b></div>
-        <div><span>台番率</span><b>28.85%</b></div>
+        <div><span>台番勝率</span><b>42.31%</b></div>
+        <div><span>機種勝率</span><b>40.11%</b></div>
+        <div><span>履歴</span><b>629.32</b></div>
       </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 2日前良台+3</div>
+      <div class="m-reason">島勝率高め40.1% / 今日成立履歴+31.02 / win_streak_1:64.52%/31件/lift+22.77 / win_streak_2:50.00%/12件/lift+8.25 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="873 攻殻機動隊 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 攻殻機動隊 攻殻" data-rank="B" data-machine="攻殻機動隊">
+    <div class="m-card" data-search="934 バイオハザード re:3 a 島勝率高め42.5% / 今日成立履歴+37.68 / prev1_hekomi:51.85%/27件/lift+16.61 / prev3_hekomi:48.15%/27件/lift+12.91 / lose_streak_1:43.40%/53件/lift+8.16 / 荒波型 荒波型 bh1 1 " data-rank="A" data-machine="バイオハザード RE:3" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">9</div>
-        <div class="m-no">873</div>
-        <div class="m-score">Score 13</div>
-        <div><span class="badge rank-B">B</span></div>
+        <div class="m-no">934</div>
+        <div class="m-score">Score 183.70</div>
+        <div><span class="badge rank-A">A</span></div>
       </div>
-      <div class="m-name">攻殻機動隊</div>
+      <div class="m-name">バイオハザード RE:3</div>
+      <div class="m-subline">島 BH1 / 位置 1 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>7,715</b></div>
-        <div><span>最沈み</span><b class="minus">-3,044</b></div>
-        <div><span>台番率</span><b>27.27%</b></div>
+        <div><span>台番勝率</span><b>35.85%</b></div>
+        <div><span>機種勝率</span><b>42.92%</b></div>
+        <div><span>履歴</span><b>454.05</b></div>
       </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
+      <div class="m-reason">島勝率高め42.5% / 今日成立履歴+37.68 / prev1_hekomi:51.85%/27件/lift+16.61 / prev3_hekomi:48.15%/27件/lift+12.91 / lose_streak_1:43.40%/53件/lift+8.16 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="1017 甲鉄城のカバネリ海門決戦 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
+    <div class="m-card" data-search="802 真打 吉宗 a 台番勝率高め47.4% / 今日成立履歴+25.13 / prev1_hekomi:61.29%/31件/lift+14.62 / prev2_hekomi:50.00%/30件/lift+3.33 / lose_streak_1:53.85%/39件/lift+7.18 / lose_streak_2:41.18%/17件/lift+0.00 / 荒波型 荒波型 ym1 1 " data-rank="A" data-machine="真打 吉宗" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">10</div>
-        <div class="m-no">1017</div>
-        <div class="m-score">Score 13</div>
-        <div><span class="badge rank-B">B</span></div>
+        <div class="m-no">802</div>
+        <div class="m-score">Score 183.67</div>
+        <div><span class="badge rank-A">A</span></div>
       </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
+      <div class="m-name">真打 吉宗</div>
+      <div class="m-subline">島 YM1 / 位置 1 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>8,041</b></div>
-        <div><span>最沈み</span><b class="minus">-939</b></div>
-        <div><span>台番率</span><b>26.92%</b></div>
+        <div><span>台番勝率</span><b>47.37%</b></div>
+        <div><span>機種勝率</span><b>37.78%</b></div>
+        <div><span>履歴</span><b>678.70</b></div>
       </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 2日前良台+3</div>
+      <div class="m-reason">台番勝率高め47.4% / 今日成立履歴+25.13 / prev1_hekomi:61.29%/31件/lift+14.62 / prev2_hekomi:50.00%/30件/lift+3.33 / lose_streak_1:53.85%/39件/lift+7.18 / lose_streak_2:41.18%/17件/lift+0.00 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="872 攻殻機動隊 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 攻殻機動隊 攻殻" data-rank="B" data-machine="攻殻機動隊">
+    <div class="m-card" data-search="828 スーパーブラックジャック b 台番勝率高め49.4% / 島勝率高め43.9% / 機種勝率高め44.0% / 今日成立履歴+14.23 / prev1_hekomi:60.00%/15件/lift+11.19 / lose_streak_1:51.85%/27件/lift+3.04 / 荒波型 荒波型 sbj1 3 " data-rank="B" data-machine="スーパーブラックジャック" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">11</div>
-        <div class="m-no">872</div>
-        <div class="m-score">Score 13</div>
+        <div class="m-no">828</div>
+        <div class="m-score">Score 182.34</div>
         <div><span class="badge rank-B">B</span></div>
       </div>
-      <div class="m-name">攻殻機動隊</div>
+      <div class="m-name">スーパーブラックジャック</div>
+      <div class="m-subline">島 SBJ1 / 位置 3 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>4,635</b></div>
-        <div><span>最沈み</span><b class="minus">-3,501</b></div>
-        <div><span>台番率</span><b>26.52%</b></div>
+        <div><span>台番勝率</span><b>49.41%</b></div>
+        <div><span>機種勝率</span><b>44.04%</b></div>
+        <div><span>履歴</span><b>547.39</b></div>
       </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
+      <div class="m-reason">台番勝率高め49.4% / 島勝率高め43.9% / 機種勝率高め44.0% / 今日成立履歴+14.23 / prev1_hekomi:60.00%/15件/lift+11.19 / lose_streak_1:51.85%/27件/lift+3.04 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="1011 甲鉄城のカバネリ海門決戦 b 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
+    <div class="m-card" data-search="1039 甲鉄城のカバネリ 海門(うなと)決戦 b 台番勝率高め46.0% / 島勝率高め44.6% / 機種勝率高め43.9% / 今日成立履歴+10.49 / prev1_hekomi:54.05%/37件/lift+7.71 / lose_streak_1:49.12%/57件/lift+2.78 / 荒波型 荒波型 k2 34 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ 海門(うなと)決戦" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">12</div>
-        <div class="m-no">1011</div>
-        <div class="m-score">Score 13</div>
+        <div class="m-no">1039</div>
+        <div class="m-score">Score 181.52</div>
         <div><span class="badge rank-B">B</span></div>
       </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
+      <div class="m-name">甲鉄城のカバネリ 海門(うなと)決戦</div>
+      <div class="m-subline">島 K2 / 位置 34 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>5,440</b></div>
-        <div><span>最沈み</span><b class="minus">-3,156</b></div>
-        <div><span>台番率</span><b>21.15%</b></div>
+        <div><span>台番勝率</span><b>45.97%</b></div>
+        <div><span>機種勝率</span><b>43.87%</b></div>
+        <div><span>履歴</span><b>752.16</b></div>
       </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
+      <div class="m-reason">台番勝率高め46.0% / 島勝率高め44.6% / 機種勝率高め43.9% / 今日成立履歴+10.49 / prev1_hekomi:54.05%/37件/lift+7.71 / lose_streak_1:49.12%/57件/lift+2.78 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="851 戦国乙女5業火を穿つ宿焔の双刃 b 機種良台率25%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="B" data-machine="戦国乙女5業火を穿つ宿焔の双刃">
+    <div class="m-card" data-search="1101 北斗の拳 転生の章2 b 今日成立履歴+40.40 / prev1_hekomi:41.38%/29件/lift+7.09 / prev2_hekomi:50.00%/24件/lift+15.71 / lose_streak_1:38.18%/55件/lift+3.89 / lose_streak_2:48.00%/25件/lift+13.71 / 荒波型 荒波型 h4 24 " data-rank="B" data-machine="北斗の拳 転生の章2" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">13</div>
-        <div class="m-no">851</div>
-        <div class="m-score">Score 13</div>
-        <div><span class="badge rank-B">B</span></div>
-      </div>
-      <div class="m-name">戦国乙女5業火を穿つ宿焔の双刃</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>8,032</b></div>
-        <div><span>最沈み</span><b class="minus">-5,948</b></div>
-        <div><span>台番率</span><b>17.32%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="837 スーパーリオエース2 b 機種良台率25%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 " data-rank="B" data-machine="スーパーリオエース2">
-      <div class="m-top">
-        <div class="m-rank">14</div>
-        <div class="m-no">837</div>
-        <div class="m-score">Score 13</div>
-        <div><span class="badge rank-B">B</span></div>
-      </div>
-      <div class="m-name">スーパーリオエース2</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>8,117</b></div>
-        <div><span>最沈み</span><b class="minus">-4,838</b></div>
-        <div><span>台番率</span><b>16.16%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="941 バイオハザードre:3 b 台番良台率25%以上+3 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="B" data-machine="バイオハザードRE:3">
-      <div class="m-top">
-        <div class="m-rank">15</div>
-        <div class="m-no">941</div>
-        <div class="m-score">Score 12</div>
-        <div><span class="badge rank-B">B</span></div>
-      </div>
-      <div class="m-name">バイオハザードRE:3</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>7,061</b></div>
-        <div><span>最沈み</span><b class="minus">-5,427</b></div>
-        <div><span>台番率</span><b>27.27%</b></div>
-      </div>
-      <div class="m-reason">台番良台率25%以上+3 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="1036 甲鉄城のカバネリ海門決戦 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
-      <div class="m-top">
-        <div class="m-rank">16</div>
-        <div class="m-no">1036</div>
-        <div class="m-score">Score 12</div>
-        <div><span class="badge rank-B">B</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>7,296</b></div>
-        <div><span>最沈み</span><b class="minus">-1,343</b></div>
-        <div><span>台番率</span><b>26.92%</b></div>
-      </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="1039 甲鉄城のカバネリ海門決戦 b 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
-      <div class="m-top">
-        <div class="m-rank">17</div>
-        <div class="m-no">1039</div>
-        <div class="m-score">Score 12</div>
-        <div><span class="badge rank-B">B</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>8,483</b></div>
-        <div><span>最沈み</span><b class="minus">-2,440</b></div>
-        <div><span>台番率</span><b>25.96%</b></div>
-      </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3</div>
-    </div>
-    
-    <div class="m-card" data-search="1078 北斗の拳 転生の章2 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="B" data-machine="北斗の拳 転生の章2">
-      <div class="m-top">
-        <div class="m-rank">18</div>
-        <div class="m-no">1078</div>
-        <div class="m-score">Score 12</div>
+        <div class="m-no">1101</div>
+        <div class="m-score">Score 181.18</div>
         <div><span class="badge rank-B">B</span></div>
       </div>
       <div class="m-name">北斗の拳 転生の章2</div>
+      <div class="m-subline">島 H4 / 位置 24 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>8,151</b></div>
-        <div><span>最沈み</span><b class="minus">-3,570</b></div>
-        <div><span>台番率</span><b>12.50%</b></div>
+        <div><span>台番勝率</span><b>34.91%</b></div>
+        <div><span>機種勝率</span><b>38.04%</b></div>
+        <div><span>履歴</span><b>481.34</b></div>
       </div>
-      <div class="m-reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
+      <div class="m-reason">今日成立履歴+40.40 / prev1_hekomi:41.38%/29件/lift+7.09 / prev2_hekomi:50.00%/24件/lift+15.71 / lose_streak_1:38.18%/55件/lift+3.89 / lose_streak_2:48.00%/25件/lift+13.71 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="1041 甲鉄城のカバネリ海門決戦 b 機種良台率25%以上+4 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
+    <div class="m-card" data-search="810 鉄拳6 b 島勝率高め42.0% / 今日成立履歴+24.61 / prev1_hekomi:47.62%/21件/lift+5.57 / prev2_hekomi:44.44%/18件/lift+2.39 / lose_streak_1:42.42%/33件/lift+0.37 / lose_streak_2:58.33%/12件/lift+16.28 / 荒波型 荒波型 tk1 3 " data-rank="B" data-machine="鉄拳6" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">14</div>
+        <div class="m-no">810</div>
+        <div class="m-score">Score 180.29</div>
+        <div><span class="badge rank-B">B</span></div>
+      </div>
+      <div class="m-name">鉄拳6</div>
+      <div class="m-subline">島 TK1 / 位置 3 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>42.70%</b></div>
+        <div><span>機種勝率</span><b>41.29%</b></div>
+        <div><span>履歴</span><b>361.38</b></div>
+      </div>
+      <div class="m-reason">島勝率高め42.0% / 今日成立履歴+24.61 / prev1_hekomi:47.62%/21件/lift+5.57 / prev2_hekomi:44.44%/18件/lift+2.39 / lose_streak_1:42.42%/33件/lift+0.37 / lose_streak_2:58.33%/12件/lift+16.28 / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="1076 スマスロ北斗の拳 b 今日成立履歴+42.59 / prev1_hekomi:50.00%/18件/lift+14.56 / prev3_hekomi:47.06%/17件/lift+11.62 / lose_streak_1:51.85%/27件/lift+16.41 / 回収型 回収型 sh3 11 " data-rank="B" data-machine="スマスロ北斗の拳" data-type="回収型">
+      <div class="m-top">
+        <div class="m-rank">15</div>
+        <div class="m-no">1076</div>
+        <div class="m-score">Score 180.21</div>
+        <div><span class="badge rank-B">B</span></div>
+      </div>
+      <div class="m-name">スマスロ北斗の拳</div>
+      <div class="m-subline">島 SH3 / 位置 11 / <span class="type-badge type-collect">回収型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>35.00%</b></div>
+        <div><span>機種勝率</span><b>39.24%</b></div>
+        <div><span>履歴</span><b>439.43</b></div>
+      </div>
+      <div class="m-reason">今日成立履歴+42.59 / prev1_hekomi:50.00%/18件/lift+14.56 / prev3_hekomi:47.06%/17件/lift+11.62 / lose_streak_1:51.85%/27件/lift+16.41 / 回収型</div>
+    </div>
+    
+    <div class="m-card" data-search="852 戦国乙女5 b 台番勝率高め45.6% / 島勝率高め42.0% / 今日成立履歴+19.53 / prev1_hekomi:39.29%/28件/lift+0.00 / prev2_hekomi:55.17%/29件/lift+9.09 / prev3_hekomi:56.52%/23件/lift+10.44 / lose_streak_1:38.10%/42件/lift+0.00 / lose_streak_2:35.00%/20件/lift+0.00 / lose_streak_3:55.56%/9件/除外(sample&lt;10) / 荒波型 荒波型 so1 3 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="B" data-machine="戦国乙女5" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">16</div>
+        <div class="m-no">852</div>
+        <div class="m-score">Score 180.12</div>
+        <div><span class="badge rank-B">B</span></div>
+      </div>
+      <div class="m-name">戦国乙女5</div>
+      <div class="m-subline">島 SO1 / 位置 3 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>45.63%</b></div>
+        <div><span>機種勝率</span><b>42.04%</b></div>
+        <div><span>履歴</span><b>562.59</b></div>
+      </div>
+      <div class="m-reason">台番勝率高め45.6% / 島勝率高め42.0% / 今日成立履歴+19.53 / prev1_hekomi:39.29%/28件/lift+0.00 / prev2_hekomi:55.17%/29件/lift+9.09 / prev3_hekomi:56.52%/23件/lift+10.44 / lose_streak_1:38.10%/42件/lift+0.00 / lose_streak_2:35.00%/20件/lift+0.00 / lose_streak_3:55.56%/9件/除外(sample&lt;10) / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="964 革命機ヴァルヴレイヴ2 b 島勝率高め40.1% / 今日成立履歴+32.27 / prev1_hekomi:56.00%/25件/lift+18.00 / lose_streak_1:52.27%/44件/lift+14.27 / 荒波型 荒波型 vvv1 7 ヴヴヴ ヴァルヴレイヴ" data-rank="B" data-machine="革命機ヴァルヴレイヴ2" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">17</div>
+        <div class="m-no">964</div>
+        <div class="m-score">Score 179.05</div>
+        <div><span class="badge rank-B">B</span></div>
+      </div>
+      <div class="m-name">革命機ヴァルヴレイヴ2</div>
+      <div class="m-subline">島 VVV1 / 位置 7 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>37.62%</b></div>
+        <div><span>機種勝率</span><b>40.11%</b></div>
+        <div><span>履歴</span><b>378.25</b></div>
+      </div>
+      <div class="m-reason">島勝率高め40.1% / 今日成立履歴+32.27 / prev1_hekomi:56.00%/25件/lift+18.00 / lose_streak_1:52.27%/44件/lift+14.27 / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="940 バイオハザード re:3 b 台番勝率高め48.2% / 島勝率高め42.5% / 今日成立履歴+13.09 / prev1_hekomi:50.00%/14件/lift+1.19 / prev3_hekomi:46.15%/13件/lift+0.00 / lose_streak_1:60.71%/28件/lift+11.90 / 荒波型 荒波型 bh1 7 " data-rank="B" data-machine="バイオハザード RE:3" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">18</div>
+        <div class="m-no">940</div>
+        <div class="m-score">Score 178.42</div>
+        <div><span class="badge rank-B">B</span></div>
+      </div>
+      <div class="m-name">バイオハザード RE:3</div>
+      <div class="m-subline">島 BH1 / 位置 7 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>48.24%</b></div>
+        <div><span>機種勝率</span><b>42.92%</b></div>
+        <div><span>履歴</span><b>486.39</b></div>
+      </div>
+      <div class="m-reason">台番勝率高め48.2% / 島勝率高め42.5% / 今日成立履歴+13.09 / prev1_hekomi:50.00%/14件/lift+1.19 / prev3_hekomi:46.15%/13件/lift+0.00 / lose_streak_1:60.71%/28件/lift+11.90 / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="997 バジリスク～甲賀忍法帖～絆2 天膳 black edition b 台番勝率50.0% / 島勝率50.0% / 機種勝率55.6% / 荒波型 荒波型 brk1 1 " data-rank="B" data-machine="バジリスク～甲賀忍法帖～絆2 天膳 BLACK EDITION" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">19</div>
-        <div class="m-no">1041</div>
-        <div class="m-score">Score 11</div>
+        <div class="m-no">997</div>
+        <div class="m-score">Score 177.29</div>
         <div><span class="badge rank-B">B</span></div>
       </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
+      <div class="m-name">バジリスク～甲賀忍法帖～絆2 天膳 BLACK EDITION</div>
+      <div class="m-subline">島 BRK1 / 位置 1 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>8,802</b></div>
-        <div><span>最沈み</span><b class="minus">-1,085</b></div>
-        <div><span>台番率</span><b>22.12%</b></div>
+        <div><span>台番勝率</span><b>50.00%</b></div>
+        <div><span>機種勝率</span><b>55.56%</b></div>
+        <div><span>履歴</span><b>400.00</b></div>
       </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1</div>
+      <div class="m-reason">台番勝率50.0% / 島勝率50.0% / 機種勝率55.6% / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="1107 東京喰種 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="B" data-machine="東京喰種">
+    <div class="m-card" data-search="603 モンキーターンv b 台番勝率50.9% / 島勝率高め40.3% / 今日成立履歴+9.82 / win_streak_1:61.54%/13件/lift+9.82 / 荒波型 荒波型 m1 4 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="B" data-machine="モンキーターンV" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">20</div>
-        <div class="m-no">1107</div>
-        <div class="m-score">Score 11</div>
+        <div class="m-no">603</div>
+        <div class="m-score">Score 176.21</div>
         <div><span class="badge rank-B">B</span></div>
       </div>
-      <div class="m-name">東京喰種</div>
+      <div class="m-name">モンキーターンV</div>
+      <div class="m-subline">島 M1 / 位置 4 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>5,823</b></div>
-        <div><span>最沈み</span><b class="minus">-3,168</b></div>
-        <div><span>台番率</span><b>20.95%</b></div>
+        <div><span>台番勝率</span><b>50.85%</b></div>
+        <div><span>機種勝率</span><b>40.38%</b></div>
+        <div><span>履歴</span><b>476.54</b></div>
       </div>
-      <div class="m-reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
+      <div class="m-reason">台番勝率50.9% / 島勝率高め40.3% / 今日成立履歴+9.82 / win_streak_1:61.54%/13件/lift+9.82 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="1010 甲鉄城のカバネリ海門決戦 b 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="B" data-machine="甲鉄城のカバネリ海門決戦">
+    <div class="m-card" data-search="823 ゴッドイーター リザレクション c 台番勝率51.9% / 島勝率48.8% / 機種勝率48.7% / 今日成立履歴+0.07 / win_streak_1:51.61%/62件/lift+0.07 / 荒波型 荒波型 ger1 1 " data-rank="C" data-machine="ゴッドイーター リザレクション" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">21</div>
-        <div class="m-no">1010</div>
-        <div class="m-score">Score 11</div>
-        <div><span class="badge rank-B">B</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>4,163</b></div>
-        <div><span>最沈み</span><b class="minus">-2,032</b></div>
-        <div><span>台番率</span><b>18.27%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="1106 東京喰種 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="B" data-machine="東京喰種">
-      <div class="m-top">
-        <div class="m-rank">22</div>
-        <div class="m-no">1106</div>
-        <div class="m-score">Score 11</div>
-        <div><span class="badge rank-B">B</span></div>
-      </div>
-      <div class="m-name">東京喰種</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>4,135</b></div>
-        <div><span>最沈み</span><b class="minus">-3,734</b></div>
-        <div><span>台番率</span><b>17.14%</b></div>
-      </div>
-      <div class="m-reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="1103 東京喰種 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="B" data-machine="東京喰種">
-      <div class="m-top">
-        <div class="m-rank">23</div>
-        <div class="m-no">1103</div>
-        <div class="m-score">Score 11</div>
-        <div><span class="badge rank-B">B</span></div>
-      </div>
-      <div class="m-name">東京喰種</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>6,800</b></div>
-        <div><span>最沈み</span><b class="minus">-3,288</b></div>
-        <div><span>台番率</span><b>14.29%</b></div>
-      </div>
-      <div class="m-reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="1043 東京喰種 b 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="B" data-machine="東京喰種">
-      <div class="m-top">
-        <div class="m-rank">24</div>
-        <div class="m-no">1043</div>
-        <div class="m-score">Score 11</div>
-        <div><span class="badge rank-B">B</span></div>
-      </div>
-      <div class="m-name">東京喰種</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>6,122</b></div>
-        <div><span>最沈み</span><b class="minus">-4,760</b></div>
-        <div><span>台番率</span><b>10.91%</b></div>
-      </div>
-      <div class="m-reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="1111 東京喰種 c 台番良台率30%以上+6 / 機種良台率20%以上+2 / 前日4000g以上+1 / 3日前良台+1 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="C" data-machine="東京喰種">
-      <div class="m-top">
-        <div class="m-rank">25</div>
-        <div class="m-no">1111</div>
-        <div class="m-score">Score 10</div>
+        <div class="m-no">823</div>
+        <div class="m-score">Score 176.21</div>
         <div><span class="badge rank-C">C</span></div>
       </div>
-      <div class="m-name">東京喰種</div>
+      <div class="m-name">ゴッドイーター リザレクション</div>
+      <div class="m-subline">島 GER1 / 位置 1 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>6,979</b></div>
-        <div><span>最沈み</span><b class="minus">-1,810</b></div>
-        <div><span>台番率</span><b>33.33%</b></div>
+        <div><span>台番勝率</span><b>51.91%</b></div>
+        <div><span>機種勝率</span><b>48.69%</b></div>
+        <div><span>履歴</span><b>639.14</b></div>
       </div>
-      <div class="m-reason">台番良台率30%以上+6 / 機種良台率20%以上+2 / 前日4000G以上+1 / 3日前良台+1</div>
+      <div class="m-reason">台番勝率51.9% / 島勝率48.8% / 機種勝率48.7% / 今日成立履歴+0.07 / win_streak_1:51.61%/62件/lift+0.07 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="621 モンキーターンv c 台番良台率30%以上+6 / 前日4000g以上+1 / 前日8000g以上+1 / 前日良台+1 / 3日前良台+1 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="C" data-machine="モンキーターンV">
+    <div class="m-card" data-search="825 ゴッドイーター リザレクション c 台番勝率51.5% / 島勝率48.8% / 機種勝率48.7% / 荒波型 荒波型 ger1 3 " data-rank="C" data-machine="ゴッドイーター リザレクション" data-type="荒波型">
       <div class="m-top">
-        <div class="m-rank">26</div>
-        <div class="m-no">621</div>
-        <div class="m-score">Score 10</div>
+        <div class="m-rank">22</div>
+        <div class="m-no">825</div>
+        <div class="m-score">Score 176.05</div>
+        <div><span class="badge rank-C">C</span></div>
+      </div>
+      <div class="m-name">ゴッドイーター リザレクション</div>
+      <div class="m-subline">島 GER1 / 位置 3 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>51.52%</b></div>
+        <div><span>機種勝率</span><b>48.69%</b></div>
+        <div><span>履歴</span><b>677.49</b></div>
+      </div>
+      <div class="m-reason">台番勝率51.5% / 島勝率48.8% / 機種勝率48.7% / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="1033 甲鉄城のカバネリ 海門(うなと)決戦 c 台番勝率51.7% / 島勝率高め44.6% / 機種勝率高め43.9% / 荒波型 荒波型 k2 28 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ 海門(うなと)決戦" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">23</div>
+        <div class="m-no">1033</div>
+        <div class="m-score">Score 175.55</div>
+        <div><span class="badge rank-C">C</span></div>
+      </div>
+      <div class="m-name">甲鉄城のカバネリ 海門(うなと)決戦</div>
+      <div class="m-subline">島 K2 / 位置 28 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>51.69%</b></div>
+        <div><span>機種勝率</span><b>43.87%</b></div>
+        <div><span>履歴</span><b>501.23</b></div>
+      </div>
+      <div class="m-reason">台番勝率51.7% / 島勝率高め44.6% / 機種勝率高め43.9% / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="1100 北斗の拳 転生の章2 c 台番勝率高め46.8% / 今日成立履歴+14.46 / win_streak_1:61.90%/21件/lift+14.46 / 荒波型 荒波型 h4 23 " data-rank="C" data-machine="北斗の拳 転生の章2" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">24</div>
+        <div class="m-no">1100</div>
+        <div class="m-score">Score 174.97</div>
+        <div><span class="badge rank-C">C</span></div>
+      </div>
+      <div class="m-name">北斗の拳 転生の章2</div>
+      <div class="m-subline">島 H4 / 位置 23 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>46.84%</b></div>
+        <div><span>機種勝率</span><b>38.04%</b></div>
+        <div><span>履歴</span><b>680.32</b></div>
+      </div>
+      <div class="m-reason">台番勝率高め46.8% / 今日成立履歴+14.46 / win_streak_1:61.90%/21件/lift+14.46 / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="602 モンキーターンv c 島勝率高め40.3% / 今日成立履歴+17.36 / prev3_hekomi:57.14%/7件/除外(sample&lt;10) / lose_streak_1:61.11%/18件/lift+17.36 / 荒波型 荒波型 m1 3 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="C" data-machine="モンキーターンV" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">25</div>
+        <div class="m-no">602</div>
+        <div class="m-score">Score 174.74</div>
         <div><span class="badge rank-C">C</span></div>
       </div>
       <div class="m-name">モンキーターンV</div>
+      <div class="m-subline">島 M1 / 位置 3 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>9,759</b></div>
-        <div><span>最沈み</span><b class="minus">-553</b></div>
-        <div><span>台番率</span><b>32.35%</b></div>
+        <div><span>台番勝率</span><b>44.62%</b></div>
+        <div><span>機種勝率</span><b>40.38%</b></div>
+        <div><span>履歴</span><b>335.77</b></div>
       </div>
-      <div class="m-reason">台番良台率30%以上+6 / 前日4000G以上+1 / 前日8000G以上+1 / 前日良台+1 / 3日前良台+1</div>
+      <div class="m-reason">島勝率高め40.3% / 今日成立履歴+17.36 / prev3_hekomi:57.14%/7件/除外(sample&lt;10) / lose_streak_1:61.11%/18件/lift+17.36 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="1029 甲鉄城のカバネリ海門決戦 c 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
+    <div class="m-card" data-search="872 攻殻機動隊 c 今日成立履歴+21.19 / prev2_hekomi:48.65%/37件/lift+6.13 / lose_streak_1:41.54%/65件/lift+0.00 / lose_streak_2:57.58%/33件/lift+15.06 / 荒波型 荒波型 kkk1 5 攻殻機動隊 攻殻" data-rank="C" data-machine="攻殻機動隊" data-type="荒波型">
+      <div class="m-top">
+        <div class="m-rank">26</div>
+        <div class="m-no">872</div>
+        <div class="m-score">Score 173.72</div>
+        <div><span class="badge rank-C">C</span></div>
+      </div>
+      <div class="m-name">攻殻機動隊</div>
+      <div class="m-subline">島 KKK1 / 位置 5 / <span class="type-badge type-rough">荒波型</span></div>
+      <div class="m-metrics">
+        <div><span>台番勝率</span><b>42.19%</b></div>
+        <div><span>機種勝率</span><b>40.03%</b></div>
+        <div><span>履歴</span><b>507.80</b></div>
+      </div>
+      <div class="m-reason">今日成立履歴+21.19 / prev2_hekomi:48.65%/37件/lift+6.13 / lose_streak_1:41.54%/65件/lift+0.00 / lose_streak_2:57.58%/33件/lift+15.06 / 荒波型</div>
+    </div>
+    
+    <div class="m-card" data-search="821 モンスターハンターライズ c 台番勝率高め46.1% / 島勝率50.0% / 機種勝率49.8% / 今日成立履歴+7.13 / win_streak_1:53.66%/41件/lift+7.13 / 荒波型 荒波型 mh1 2 " data-rank="C" data-machine="モンスターハンターライズ" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">27</div>
-        <div class="m-no">1029</div>
-        <div class="m-score">Score 10</div>
+        <div class="m-no">821</div>
+        <div class="m-score">Score 173.44</div>
         <div><span class="badge rank-C">C</span></div>
       </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
+      <div class="m-name">モンスターハンターライズ</div>
+      <div class="m-subline">島 MH1 / 位置 2 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>7,464</b></div>
-        <div><span>最沈み</span><b class="minus">-180</b></div>
-        <div><span>台番率</span><b>26.92%</b></div>
+        <div><span>台番勝率</span><b>46.08%</b></div>
+        <div><span>機種勝率</span><b>49.83%</b></div>
+        <div><span>履歴</span><b>754.63</b></div>
       </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1 / 3日前良台+1</div>
+      <div class="m-reason">台番勝率高め46.1% / 島勝率50.0% / 機種勝率49.8% / 今日成立履歴+7.13 / win_streak_1:53.66%/41件/lift+7.13 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="998 シャーマンキング c 台番良台率25%以上+3 / 機種良台率20%以上+1 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 " data-rank="C" data-machine="シャーマンキング">
+    <div class="m-card" data-search="936 バイオハザード re:3 c 台番勝率50.5% / 島勝率高め42.5% / 今日成立履歴+4.47 / win_streak_1:55.56%/27件/lift+4.47 / 荒波型 荒波型 bh1 3 " data-rank="C" data-machine="バイオハザード RE:3" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">28</div>
-        <div class="m-no">998</div>
-        <div class="m-score">Score 10</div>
+        <div class="m-no">936</div>
+        <div class="m-score">Score 173.12</div>
         <div><span class="badge rank-C">C</span></div>
       </div>
-      <div class="m-name">シャーマンキング</div>
+      <div class="m-name">バイオハザード RE:3</div>
+      <div class="m-subline">島 BH1 / 位置 3 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>6,633</b></div>
-        <div><span>最沈み</span><b class="minus">-3,237</b></div>
-        <div><span>台番率</span><b>25.00%</b></div>
+        <div><span>台番勝率</span><b>50.54%</b></div>
+        <div><span>機種勝率</span><b>42.92%</b></div>
+        <div><span>履歴</span><b>483.93</b></div>
       </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率20%以上+1 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
+      <div class="m-reason">台番勝率50.5% / 島勝率高め42.5% / 今日成立履歴+4.47 / win_streak_1:55.56%/27件/lift+4.47 / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="958 革命機ヴァルヴレイヴ2 c top50台番+1 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="C" data-machine="革命機ヴァルヴレイヴ2">
+    <div class="m-card" data-search="829 戦国乙女4 戦乱に閃く炯眼の軍師 c 台番勝率52.0% / 島勝率45.3% / 機種勝率高め44.9% / 荒波型 荒波型 sos1 1 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="C" data-machine="戦国乙女4 戦乱に閃く炯眼の軍師" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">29</div>
-        <div class="m-no">958</div>
-        <div class="m-score">Score 10</div>
+        <div class="m-no">829</div>
+        <div class="m-score">Score 172.63</div>
         <div><span class="badge rank-C">C</span></div>
       </div>
-      <div class="m-name">革命機ヴァルヴレイヴ2</div>
+      <div class="m-name">戦国乙女4 戦乱に閃く炯眼の軍師</div>
+      <div class="m-subline">島 SOS1 / 位置 1 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>7,266</b></div>
-        <div><span>最沈み</span><b class="minus">-3,620</b></div>
-        <div><span>台番率</span><b>23.21%</b></div>
+        <div><span>台番勝率</span><b>52.00%</b></div>
+        <div><span>機種勝率</span><b>44.90%</b></div>
+        <div><span>履歴</span><b>282.68</b></div>
       </div>
-      <div class="m-reason">TOP50台番+1 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
+      <div class="m-reason">台番勝率52.0% / 島勝率45.3% / 機種勝率高め44.9% / 荒波型</div>
     </div>
     
-    <div class="m-card" data-search="1022 甲鉄城のカバネリ海門決戦 c top50台番+1 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
+    <div class="m-card" data-search="898 化物語 c 島勝率高め43.9% / 機種勝率高め43.6% / 今日成立履歴+12.96 / win_streak_1:46.15%/39件/lift+2.63 / win_streak_2:53.85%/13件/lift+10.33 / 荒波型 荒波型 bm1 1 " data-rank="C" data-machine="化物語" data-type="荒波型">
       <div class="m-top">
         <div class="m-rank">30</div>
-        <div class="m-no">1022</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>5,919</b></div>
-        <div><span>最沈み</span><b class="minus">-2,283</b></div>
-        <div><span>台番率</span><b>23.08%</b></div>
-      </div>
-      <div class="m-reason">TOP50台番+1 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="852 戦国乙女5業火を穿つ宿焔の双刃 c top50台番+1 / 機種良台率25%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="C" data-machine="戦国乙女5業火を穿つ宿焔の双刃">
-      <div class="m-top">
-        <div class="m-rank">31</div>
-        <div class="m-no">852</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">戦国乙女5業火を穿つ宿焔の双刃</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>9,388</b></div>
-        <div><span>最沈み</span><b class="minus">-4,534</b></div>
-        <div><span>台番率</span><b>22.83%</b></div>
-      </div>
-      <div class="m-reason">TOP50台番+1 / 機種良台率25%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
-    </div>
-    
-    <div class="m-card" data-search="927 炎炎ノ消防隊2 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1 炎炎ノ消防隊 炎炎ノ消防隊2 炎炎 炎炎ノ消防隊2" data-rank="C" data-machine="炎炎ノ消防隊2">
-      <div class="m-top">
-        <div class="m-rank">32</div>
-        <div class="m-no">927</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">炎炎ノ消防隊2</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>6,577</b></div>
-        <div><span>最沈み</span><b class="minus">-993</b></div>
-        <div><span>台番率</span><b>22.00%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="1033 甲鉄城のカバネリ海門決戦 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <div class="m-top">
-        <div class="m-rank">33</div>
-        <div class="m-no">1033</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>7,668</b></div>
-        <div><span>最沈み</span><b class="minus">-148</b></div>
-        <div><span>台番率</span><b>20.19%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1 / 2日前良台+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="860 戦国乙女5業火を穿つ宿焔の双刃 c 機種良台率25%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 戦国乙女 戦国乙女5 乙女 戦国乙女5" data-rank="C" data-machine="戦国乙女5業火を穿つ宿焔の双刃">
-      <div class="m-top">
-        <div class="m-rank">34</div>
-        <div class="m-no">860</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">戦国乙女5業火を穿つ宿焔の双刃</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>8,434</b></div>
-        <div><span>最沈み</span><b class="minus">-2,544</b></div>
-        <div><span>台番率</span><b>19.69%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="1031 甲鉄城のカバネリ海門決戦 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <div class="m-top">
-        <div class="m-rank">35</div>
-        <div class="m-no">1031</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>6,363</b></div>
-        <div><span>最沈み</span><b class="minus">-4,898</b></div>
-        <div><span>台番率</span><b>19.23%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
-    </div>
-    
-    <div class="m-card" data-search="826 スーパーブラックジャック c 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 / 3日前良台+1 " data-rank="C" data-machine="スーパーブラックジャック">
-      <div class="m-top">
-        <div class="m-rank">36</div>
-        <div class="m-no">826</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">スーパーブラックジャック</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>4,069</b></div>
-        <div><span>最沈み</span><b class="minus">-2,656</b></div>
-        <div><span>台番率</span><b>18.57%</b></div>
-      </div>
-      <div class="m-reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="1027 甲鉄城のカバネリ海門決戦 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <div class="m-top">
-        <div class="m-rank">37</div>
-        <div class="m-no">1027</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>4,671</b></div>
-        <div><span>最沈み</span><b class="minus">-3,447</b></div>
-        <div><span>台番率</span><b>18.27%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
-    </div>
-    
-    <div class="m-card" data-search="923 炎炎ノ消防隊2 c 機種良台率25%以上+4 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 炎炎ノ消防隊 炎炎ノ消防隊2 炎炎 炎炎ノ消防隊2" data-rank="C" data-machine="炎炎ノ消防隊2">
-      <div class="m-top">
-        <div class="m-rank">38</div>
-        <div class="m-no">923</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">炎炎ノ消防隊2</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>5,612</b></div>
-        <div><span>最沈み</span><b class="minus">-4,659</b></div>
-        <div><span>台番率</span><b>16.88%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
-    </div>
-    
-    <div class="m-card" data-search="987 銀河英雄伝説dieneuethese c 機種良台率20%以上+1 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="C" data-machine="銀河英雄伝説DieNeueThese">
-      <div class="m-top">
-        <div class="m-rank">39</div>
-        <div class="m-no">987</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">銀河英雄伝説DieNeueThese</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>7,032</b></div>
-        <div><span>最沈み</span><b class="minus">-3,129</b></div>
-        <div><span>台番率</span><b>16.54%</b></div>
-      </div>
-      <div class="m-reason">機種良台率20%以上+1 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="1007 甲鉄城のカバネリ海門決戦 c 機種良台率25%以上+4 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 3日前良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <div class="m-top">
-        <div class="m-rank">40</div>
-        <div class="m-no">1007</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>3,675</b></div>
-        <div><span>最沈み</span><b class="minus">-3,414</b></div>
-        <div><span>台番率</span><b>16.35%</b></div>
-      </div>
-      <div class="m-reason">機種良台率25%以上+4 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="1001 からくりサーカス c 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 " data-rank="C" data-machine="からくりサーカス">
-      <div class="m-top">
-        <div class="m-rank">41</div>
-        <div class="m-no">1001</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">からくりサーカス</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>8,992</b></div>
-        <div><span>最沈み</span><b class="minus">-6,093</b></div>
-        <div><span>台番率</span><b>16.07%</b></div>
-      </div>
-      <div class="m-reason">前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="973 かぐや様は告らせたい c 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1 " data-rank="C" data-machine="かぐや様は告らせたい">
-      <div class="m-top">
-        <div class="m-rank">42</div>
-        <div class="m-no">973</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">かぐや様は告らせたい</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>5,232</b></div>
-        <div><span>最沈み</span><b class="minus">-4,093</b></div>
-        <div><span>台番率</span><b>15.58%</b></div>
-      </div>
-      <div class="m-reason">前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="1060 東京喰種 c 機種良台率20%以上+2 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 グール 東京喰種 tokyo ghoul ghoul グール 喰種 tokyo ghoul ghoul" data-rank="C" data-machine="東京喰種">
-      <div class="m-top">
-        <div class="m-rank">43</div>
-        <div class="m-no">1060</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">東京喰種</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>3,716</b></div>
-        <div><span>最沈み</span><b class="minus">-3,192</b></div>
-        <div><span>台番率</span><b>14.29%</b></div>
-      </div>
-      <div class="m-reason">機種良台率20%以上+2 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="907 化物語 c 機種良台率20%以上+2 / 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 " data-rank="C" data-machine="化物語">
-      <div class="m-top">
-        <div class="m-rank">44</div>
-        <div class="m-no">907</div>
-        <div class="m-score">Score 10</div>
+        <div class="m-no">898</div>
+        <div class="m-score">Score 172.27</div>
         <div><span class="badge rank-C">C</span></div>
       </div>
       <div class="m-name">化物語</div>
+      <div class="m-subline">島 BM1 / 位置 1 / <span class="type-badge type-rough">荒波型</span></div>
       <div class="m-metrics">
-        <div><span>前日G</span><b>8,348</b></div>
-        <div><span>最沈み</span><b class="minus">-2,426</b></div>
-        <div><span>台番率</span><b>11.11%</b></div>
+        <div><span>台番勝率</span><b>44.04%</b></div>
+        <div><span>機種勝率</span><b>43.61%</b></div>
+        <div><span>履歴</span><b>650.44</b></div>
       </div>
-      <div class="m-reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="611 モンキーターンv c 前日4000g以上+1 / 前日8000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3 モンキーターン モンキーターンv スマスロモンキー モンキー モンキーターンv スマスロモンキー" data-rank="C" data-machine="モンキーターンV">
-      <div class="m-top">
-        <div class="m-rank">45</div>
-        <div class="m-no">611</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">モンキーターンV</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>9,958</b></div>
-        <div><span>最沈み</span><b class="minus">-3,550</b></div>
-        <div><span>台番率</span><b>8.82%</b></div>
-      </div>
-      <div class="m-reason">前日4000G以上+1 / 前日8000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 / 2日前良台+3</div>
-    </div>
-    
-    <div class="m-card" data-search="997 バジリスク甲賀忍法帖絆2天膳blackedition c 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 / 3日前良台+1 " data-rank="C" data-machine="バジリスク甲賀忍法帖絆2天膳BLACKEDITION">
-      <div class="m-top">
-        <div class="m-rank">46</div>
-        <div class="m-no">997</div>
-        <div class="m-score">Score 10</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">バジリスク甲賀忍法帖絆2天膳BLACKEDITION</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>5,378</b></div>
-        <div><span>最沈み</span><b class="minus">-2,633</b></div>
-        <div><span>台番率</span><b>%</b></div>
-      </div>
-      <div class="m-reason">機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 2日前良台+3 / 3日前良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="1019 甲鉄城のカバネリ海門決戦 c 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <div class="m-top">
-        <div class="m-rank">47</div>
-        <div class="m-no">1019</div>
-        <div class="m-score">Score 9</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>6,529</b></div>
-        <div><span>最沈み</span><b class="minus">-1,269</b></div>
-        <div><span>台番率</span><b>29.81%</b></div>
-      </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="955 ミリオンゴッド-神々の軌跡- c 台番良台率25%以上+3 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 " data-rank="C" data-machine="ミリオンゴッド-神々の軌跡-">
-      <div class="m-top">
-        <div class="m-rank">48</div>
-        <div class="m-no">955</div>
-        <div class="m-score">Score 9</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">ミリオンゴッド-神々の軌跡-</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>6,927</b></div>
-        <div><span>最沈み</span><b class="minus">-6,291</b></div>
-        <div><span>台番率</span><b>25.97%</b></div>
-      </div>
-      <div class="m-reason">台番良台率25%以上+3 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
-    </div>
-    
-    <div class="m-card" data-search="1008 甲鉄城のカバネリ海門決戦 c 台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000g以上+1 / 前日良台+1 甲鉄城のカバネリ 海門決戦 カバネリ 海門決戦" data-rank="C" data-machine="甲鉄城のカバネリ海門決戦">
-      <div class="m-top">
-        <div class="m-rank">49</div>
-        <div class="m-no">1008</div>
-        <div class="m-score">Score 9</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">甲鉄城のカバネリ海門決戦</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>6,179</b></div>
-        <div><span>最沈み</span><b class="minus">-1,288</b></div>
-        <div><span>台番率</span><b>25.00%</b></div>
-      </div>
-      <div class="m-reason">台番良台率25%以上+3 / 機種良台率25%以上+4 / 前日4000G以上+1 / 前日良台+1</div>
-    </div>
-    
-    <div class="m-card" data-search="828 スーパーブラックジャック c top50台番+1 / 機種良台率20%以上+2 / 前日4000g以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2 " data-rank="C" data-machine="スーパーブラックジャック">
-      <div class="m-top">
-        <div class="m-rank">50</div>
-        <div class="m-no">828</div>
-        <div class="m-score">Score 9</div>
-        <div><span class="badge rank-C">C</span></div>
-      </div>
-      <div class="m-name">スーパーブラックジャック</div>
-      <div class="m-metrics">
-        <div><span>前日G</span><b>6,718</b></div>
-        <div><span>最沈み</span><b class="minus">-3,926</b></div>
-        <div><span>台番率</span><b>24.29%</b></div>
-      </div>
-      <div class="m-reason">TOP50台番+1 / 機種良台率20%以上+2 / 前日4000G以上+1 / 前日-2000以下沈み+3 / 前日-3000以下沈み+2</div>
+      <div class="m-reason">島勝率高め43.9% / 機種勝率高め43.6% / 今日成立履歴+12.96 / win_streak_1:46.15%/39件/lift+2.63 / win_streak_2:53.85%/13件/lift+10.33 / 荒波型</div>
     </div>
     
   </div>
 
   <div class="footer">
-    スマホではカード表示。検索欄に「カバネリ」「グール」「1111」などを入れると絞り込みできます。
+    V8版。スマホではカード表示。検索欄に「カバネリ」「グール」「1111」などを入れると絞り込みできます。
   </div>
-
 </div>
-
 <script>
 
 let currentRankFilter = "ALL";
+let currentTypeFilter = "ALL";
 const hiddenMachines = new Set();
 
 function normalizeSearchQuery(q) {
   q = q.toLowerCase().trim();
-
   const aliases = {
     "グール": ["グール", "喰種", "東京喰種", "tokyo ghoul", "ghoul"],
     "喰種": ["グール", "喰種", "東京喰種", "tokyo ghoul", "ghoul"],
     "東京喰種": ["グール", "喰種", "東京喰種", "tokyo ghoul", "ghoul"],
-
     "カバネリ": ["カバネリ", "甲鉄城のカバネリ", "海門決戦"],
     "甲鉄城のカバネリ": ["カバネリ", "甲鉄城のカバネリ", "海門決戦"],
-
     "モンキー": ["モンキー", "モンキーターン", "モンキーターンv", "スマスロモンキー"],
     "モンキーターン": ["モンキー", "モンキーターン", "モンキーターンv", "スマスロモンキー"],
-
     "炎炎": ["炎炎", "炎炎ノ消防隊", "炎炎ノ消防隊2"],
     "攻殻": ["攻殻", "攻殻機動隊"],
-    "乙女": ["乙女", "戦国乙女", "戦国乙女5"]
+    "乙女": ["乙女", "戦国乙女", "戦国乙女5"],
+    "vvv": ["vvv", "ヴヴヴ", "ヴァルヴレイヴ"],
+    "ヴヴヴ": ["vvv", "ヴヴヴ", "ヴァルヴレイヴ"]
   };
-
   for (const key in aliases) {
-    if (q.includes(key)) {
-      return aliases[key].map(x => x.toLowerCase());
-    }
+    if (q.includes(key)) return aliases[key].map(x => x.toLowerCase());
   }
-
   return q === "" ? [] : [q];
 }
 
 function machineMatchedHidden(machineText) {
   machineText = (machineText || "").toLowerCase();
-
   const hiddenAliases = {
     "カバネリ": ["カバネリ", "甲鉄城のカバネリ", "海門決戦"],
     "グール": ["グール", "喰種", "東京喰種", "tokyo ghoul", "ghoul"],
     "モンキー": ["モンキー", "モンキーターン", "モンキーターンv", "スマスロモンキー"],
     "炎炎": ["炎炎", "炎炎ノ消防隊", "炎炎ノ消防隊2"],
     "攻殻": ["攻殻", "攻殻機動隊"],
-    "乙女": ["乙女", "戦国乙女", "戦国乙女5"]
+    "乙女": ["乙女", "戦国乙女", "戦国乙女5"],
+    "vvv": ["vvv", "ヴヴヴ", "ヴァルヴレイヴ"]
   };
-
   for (const hidden of hiddenMachines) {
     const words = hiddenAliases[hidden] || [hidden];
     for (const w of words) {
-      if (machineText.includes(w.toLowerCase())) {
-        return true;
-      }
+      if (machineText.includes(w.toLowerCase())) return true;
     }
   }
   return false;
@@ -1998,19 +1142,14 @@ function applyFilters() {
     const search = item.dataset.search || "";
     const rank = item.dataset.rank || "";
     const machine = item.dataset.machine || "";
+    const type = item.dataset.type || "";
 
-    const matchSearch =
-      qWords.length === 0 ||
-      qWords.some(word => search.includes(word));
+    const matchSearch = qWords.length === 0 || qWords.some(word => search.includes(word));
+    const matchRank = currentRankFilter === "ALL" || rank === currentRankFilter;
+    const matchType = currentTypeFilter === "ALL" || type === currentTypeFilter;
+    const matchMachineHide = !machineMatchedHidden(machine);
 
-    const matchRank =
-      currentRankFilter === "ALL" ||
-      rank === currentRankFilter;
-
-    const matchMachineHide =
-      !machineMatchedHidden(machine);
-
-    item.style.display = (matchSearch && matchRank && matchMachineHide) ? "" : "none";
+    item.style.display = (matchSearch && matchRank && matchType && matchMachineHide) ? "" : "none";
   });
 }
 
@@ -2025,17 +1164,24 @@ document.querySelectorAll("[data-rank-filter]").forEach(btn => {
   });
 });
 
+document.querySelectorAll("[data-type-filter]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("[data-type-filter]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentTypeFilter = btn.dataset.typeFilter;
+    applyFilters();
+  });
+});
+
 document.querySelectorAll("[data-hide-machine]").forEach(btn => {
   btn.addEventListener("click", () => {
     const key = btn.dataset.hideMachine;
-
     if (key === "ALL_CLEAR") {
       hiddenMachines.clear();
       document.querySelectorAll("[data-hide-machine]").forEach(b => b.classList.remove("hidden-on"));
       applyFilters();
       return;
     }
-
     if (hiddenMachines.has(key)) {
       hiddenMachines.delete(key);
       btn.classList.remove("hidden-on");
@@ -2043,7 +1189,6 @@ document.querySelectorAll("[data-hide-machine]").forEach(btn => {
       hiddenMachines.add(key);
       btn.classList.add("hidden-on");
     }
-
     applyFilters();
   });
 });
